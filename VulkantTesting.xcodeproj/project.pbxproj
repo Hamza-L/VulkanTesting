@@ -99,8 +99,8 @@
 			buildConfigurationList = 95C6802725968C9D0089EE1B /* Build configuration list for PBXNativeTarget "VulkantTesting" */;
 			buildPhases = (
 				95C6801D25968C9D0089EE1B /* Frameworks */,
-				95C6801C25968C9D0089EE1B /* Sources */,
 				954FB54025D2182700931DBA /* Embed Libraries */,
+				95C6801C25968C9D0089EE1B /* Sources */,
 			);
 			buildRules = (
 			);
