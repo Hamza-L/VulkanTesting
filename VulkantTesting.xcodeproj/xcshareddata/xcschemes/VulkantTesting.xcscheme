@@ -52,13 +52,13 @@
       </BuildableProductRunnable>
       <EnvironmentVariables>
          <EnvironmentVariable
-            key = "VK_ICD_FILENAMES=/Users/hamzalah/VulkanSDK/macOS/share/vulkan/icd.d/MoltenVK_icd.json"
-            value = ""
+            key = "VK_ICD_FILENAMES"
+            value = "/Users/hamzalah/VulkanSDK/macOS/share/vulkan/icd.d/MoltenVK_icd.json"
             isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
-            key = "VK_LAYER_PATH=/Users/hamzalah/VulkanSDK/macOS/share/vulkan/explicit_layer.d"
-            value = ""
+            key = "VK_LAYER_PATH"
+            value = "/Users/hamzalah/VulkanSDK/macOS/share/vulkan/explicit_layer.d"
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>
