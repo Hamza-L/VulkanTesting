@@ -45,7 +45,6 @@
 		954FB52825D208F800931DBA /* libvulkan.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libvulkan.1.dylib; path = ../../../../VulkanSDK/macOS/lib/libvulkan.1.dylib; sourceTree = "<group>"; };
 		954FB52A25D208FB00931DBA /* libvulkan.1.2.162.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libvulkan.1.2.162.dylib; path = ../../../../VulkanSDK/macOS/lib/libvulkan.1.2.162.dylib; sourceTree = "<group>"; };
 		954FB53725D20EF200931DBA /* libglfw.3.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.4.dylib; path = ../../../../../../usr/local/lib/libglfw.3.4.dylib; sourceTree = "<group>"; };
-		954FB54B25D33F3F00931DBA /* libMoltenVK.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libMoltenVK.dylib; path = ../../../../VulkanSDK/MoltenVK/dylib/macOS/libMoltenVK.dylib; sourceTree = "<group>"; };
 		95C6802025968C9D0089EE1B /* VulkantTesting */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = VulkantTesting; sourceTree = BUILT_PRODUCTS_DIR; };
 		95C6802325968C9D0089EE1B /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -70,7 +69,6 @@
 				954FB53725D20EF200931DBA /* libglfw.3.4.dylib */,
 				954FB52A25D208FB00931DBA /* libvulkan.1.2.162.dylib */,
 				954FB52825D208F800931DBA /* libvulkan.1.dylib */,
-				954FB54B25D33F3F00931DBA /* libMoltenVK.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -303,32 +301,40 @@
 		95C6802825968C9D0089EE1B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QK5VYW662U;
 				ENABLE_HARDENED_RUNTIME = NO;
+				EXCLUDED_ARCHS = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				GCC_OPTIMIZATION_LEVEL = 0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"/usr/local/Cellar/glfw/HEAD-9477311/lib",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				STRIP_SWIFT_SYMBOLS = YES;
 			};
 			name = Debug;
 		};
 		95C6802925968C9D0089EE1B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QK5VYW662U;
 				ENABLE_HARDENED_RUNTIME = NO;
+				EXCLUDED_ARCHS = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -337,8 +343,11 @@
 					"$(inherited)",
 					"/usr/local/Cellar/glfw/HEAD-9477311/lib",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				STRIP_SWIFT_SYMBOLS = YES;
 			};
 			name = Release;
 		};

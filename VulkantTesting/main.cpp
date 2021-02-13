@@ -77,6 +77,10 @@ private:
     VkSurfaceKHR surface;
     VkSwapchainKHR swapChain;
     std::vector<VkImage> swapChainImages;
+    VkFormat swapChainImageFormat;
+    VkExtent2D swapChainExtent;
+    
+    std::vector<VkImageView> swapChainImageViews;
    
     
     void initWindow(){
@@ -96,6 +100,7 @@ private:
         pickPhysicalDevice();
         createLogicalDevice();
         createSwapChain();
+        createImageViews();
     }
   
     void mainLoop(){
@@ -105,6 +110,10 @@ private:
     }
     
     void cleanup(){
+        
+        for (auto imageView : swapChainImageViews) {
+                vkDestroyImageView(device, imageView, nullptr);
+            }
         
         vkDestroySwapchainKHR(device, swapChain, nullptr); // destroying the swapchain should always be performed before the device!
         vkDestroyDevice(device, nullptr); // destroying the logical device should always be performed before the instance!
@@ -133,6 +142,7 @@ private:
             imageCount = swapChainSupport.capabilities.maxImageCount;
         }
         
+        //filling the swapchain info structure
         VkSwapchainCreateInfoKHR createInfo{};
         createInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
         createInfo.surface = surface;
@@ -142,6 +152,10 @@ private:
         createInfo.imageExtent = extent;
         createInfo.imageArrayLayers = 1;
         createInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
+        
+        //saving variable to class members.
+        swapChainImageFormat = surfaceFormat.format;
+        swapChainExtent = extent;
         
         QueueFamilyIndices indices = findQueueFamilies(physicalDevice);
         uint32_t queueFamilyIndices[] = {indices.graphicsFamily.value(), indices.presentFamily.value()};
@@ -192,17 +206,16 @@ private:
         createInfo.ppEnabledExtensionNames = glfwExtensions;
         createInfo.enabledLayerCount = 0;
         
-        VkResult result = vkCreateInstance(&createInfo, nullptr, &instance);
-        
         auto extensions = getRequiredExtensions();
         createInfo.enabledExtensionCount = static_cast<uint32_t>(extensions.size());
         createInfo.ppEnabledExtensionNames = extensions.data();
         
         VkDebugUtilsMessengerCreateInfoEXT debugCreateInfo;
+        
         if (enableValidationLayers) {
             createInfo.enabledLayerCount = static_cast<uint32_t>(validationLayers.size());
             createInfo.ppEnabledLayerNames = validationLayers.data();
-
+            
             populateDebugMessengerCreateInfo(debugCreateInfo);
             createInfo.pNext = (VkDebugUtilsMessengerCreateInfoEXT*) &debugCreateInfo;
         } else {
@@ -211,9 +224,8 @@ private:
             createInfo.pNext = nullptr;
         }
 
-        
-        if(result != VK_SUCCESS){
-            std::cout << result << std::endl;
+        //VkResult result = vkCreateInstance(&createInfo, nullptr, &instance);
+        if(vkCreateInstance(&createInfo, nullptr, &instance) != VK_SUCCESS){
             throw std::runtime_error("failed to create instance!");
         }
                 
@@ -226,6 +238,35 @@ private:
         if (glfwCreateWindowSurface(instance, window, nullptr, &surface) != VK_SUCCESS) {
                     throw std::runtime_error("failed to create window surface!");
             }
+    }
+    
+    void createImageViews(){
+        swapChainImageViews.resize(swapChainImages.size());
+        
+        
+        for (size_t i=0; i < swapChainImages.size(); i++){
+            VkImageViewCreateInfo createInfo{};
+            createInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
+            createInfo.image = swapChainImages[i];
+            createInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
+            createInfo.format = swapChainImageFormat;
+            
+            createInfo.components.r = VK_COMPONENT_SWIZZLE_IDENTITY;
+            createInfo.components.g = VK_COMPONENT_SWIZZLE_IDENTITY;
+            createInfo.components.b = VK_COMPONENT_SWIZZLE_IDENTITY;
+            createInfo.components.a = VK_COMPONENT_SWIZZLE_IDENTITY;
+            
+            createInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+            createInfo.subresourceRange.baseMipLevel = 0;
+            createInfo.subresourceRange.levelCount = 1;
+            createInfo.subresourceRange.baseArrayLayer = 0;
+            createInfo.subresourceRange.layerCount = 1;
+            
+            if (vkCreateImageView(device, &createInfo, nullptr, &swapChainImageViews[i]) != VK_SUCCESS) {
+                throw std::runtime_error("failed to create image views!");
+            }
+            
+        }
     }
     
     void showExtension(){
@@ -252,13 +293,13 @@ private:
     
     void setupDebugMessenger() {
         if (!enableValidationLayers) return;
+        
+        VkDebugUtilsMessengerCreateInfoEXT createInfo;
+        populateDebugMessengerCreateInfo(createInfo);
 
-            VkDebugUtilsMessengerCreateInfoEXT createInfo;
-            populateDebugMessengerCreateInfo(createInfo);
-
-            if (CreateDebugUtilsMessengerEXT(instance, &createInfo, nullptr, &debugMessenger) != VK_SUCCESS) {
-                throw std::runtime_error("failed to set up debug messenger!");
-            }
+        if (CreateDebugUtilsMessengerEXT(instance, &createInfo, nullptr, &debugMessenger) != VK_SUCCESS) {
+            throw std::runtime_error("failed to set up debug messenger!");
+        }
 
     }
     
@@ -278,6 +319,7 @@ private:
                 
         for (const char* layerName : validationLayers) {
             bool layerFound = false;
+            
             for (const auto& layerProperties : availableLayers) {
                 if (strcmp(layerName, layerProperties.layerName) == 0) {
                     layerFound = true;
