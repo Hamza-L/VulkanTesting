@@ -42,6 +42,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		950E5EE425D88C5600C49F2E /* shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; path = shaders; sourceTree = "<group>"; };
 		954FB52825D208F800931DBA /* libvulkan.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libvulkan.1.dylib; path = ../../../../VulkanSDK/macOS/lib/libvulkan.1.dylib; sourceTree = "<group>"; };
 		954FB52A25D208FB00931DBA /* libvulkan.1.2.162.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libvulkan.1.2.162.dylib; path = ../../../../VulkanSDK/macOS/lib/libvulkan.1.2.162.dylib; sourceTree = "<group>"; };
 		954FB53725D20EF200931DBA /* libglfw.3.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.4.dylib; path = ../../../../../../usr/local/lib/libglfw.3.4.dylib; sourceTree = "<group>"; };
@@ -93,6 +94,7 @@
 		95C6802225968C9D0089EE1B /* VulkantTesting */ = {
 			isa = PBXGroup;
 			children = (
+				950E5EE425D88C5600C49F2E /* shaders */,
 				95C6802325968C9D0089EE1B /* main.cpp */,
 			);
 			path = VulkantTesting;
@@ -222,6 +224,7 @@
 					/usr/local/include,
 					/Users/hamzalah/VulkanSDK/macOS/include,
 				);
+				LD_QUOTE_LINKER_ARGUMENTS_FOR_COMPILER_DRIVER = YES;
 				LIBRARY_SEARCH_PATHS = (
 					/usr/local/lib,
 					/Users/hamzalah/VulkanSDK/macOS/lib,
@@ -287,6 +290,7 @@
 					/usr/local/include,
 					/Users/hamzalah/VulkanSDK/macOS/include,
 				);
+				LD_QUOTE_LINKER_ARGUMENTS_FOR_COMPILER_DRIVER = YES;
 				LIBRARY_SEARCH_PATHS = (
 					/usr/local/lib,
 					/Users/hamzalah/VulkanSDK/macOS/lib,
@@ -313,12 +317,14 @@
 					"$(PROJECT_DIR)",
 				);
 				GCC_OPTIMIZATION_LEVEL = 0;
+				LD_QUOTE_LINKER_ARGUMENTS_FOR_COMPILER_DRIVER = YES;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"/usr/local/Cellar/glfw/HEAD-9477311/lib",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				ONLY_ACTIVE_ARCH = YES;
+				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				STRIP_SWIFT_SYMBOLS = YES;
@@ -339,12 +345,14 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				LD_QUOTE_LINKER_ARGUMENTS_FOR_COMPILER_DRIVER = YES;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"/usr/local/Cellar/glfw/HEAD-9477311/lib",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				ONLY_ACTIVE_ARCH = YES;
+				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				STRIP_SWIFT_SYMBOLS = YES;
@@ -361,7 +369,7 @@
 				95C6802625968C9D0089EE1B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		95C6802725968C9D0089EE1B /* Build configuration list for PBXNativeTarget "VulkantTesting" */ = {
 			isa = XCConfigurationList;
@@ -370,7 +378,7 @@
 				95C6802925968C9D0089EE1B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};
