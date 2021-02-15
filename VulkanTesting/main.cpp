@@ -4,9 +4,6 @@
 //
 //  Created by Hamza Lahmimsi on 2020-12-25.
 //
-
-
-
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
@@ -685,12 +682,13 @@ private:
         int width = 0, height = 0;
         glfwGetFramebufferSize(window, &width, &height);
         while (width == 0 || height == 0) {
-            std::cout <<"window has been minimized"<<std::endl;
             glfwGetFramebufferSize(window, &width, &height);
             glfwWaitEvents();
         }
         
         vkDeviceWaitIdle(device);
+        
+        cleanupSwapChain();
         
         createSwapChain();
         createImageViews();
@@ -808,7 +806,7 @@ private:
         const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData,
         void* pUserData) {
 
-        std::cerr << "validation layer: " << pCallbackData->pMessage << std::endl;
+        std::cout << "validation layer: " << pCallbackData->pMessage << std::endl;
         
         if (messageSeverity >= VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT) {
             // Message is important enough to show

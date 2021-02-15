@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9543591F25DB02B600C60E2F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9543590F25DB02B600C60E2F /* main.cpp */; };
 		954FB52925D208F800931DBA /* libvulkan.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 954FB52825D208F800931DBA /* libvulkan.1.dylib */; };
 		954FB52B25D208FB00931DBA /* libvulkan.1.2.162.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 954FB52A25D208FB00931DBA /* libvulkan.1.2.162.dylib */; };
 		954FB53825D20EF200931DBA /* libglfw.3.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 954FB53725D20EF200931DBA /* libglfw.3.4.dylib */; };
 		954FB53F25D2182700931DBA /* libglfw.3.4.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 954FB53725D20EF200931DBA /* libglfw.3.4.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		954FB54125D2182900931DBA /* libvulkan.1.2.162.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 954FB52A25D208FB00931DBA /* libvulkan.1.2.162.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		954FB54225D2182B00931DBA /* libvulkan.1.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 954FB52825D208F800931DBA /* libvulkan.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		95C6802425968C9D0089EE1B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 95C6802325968C9D0089EE1B /* main.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -42,12 +42,16 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		950E5EE425D88C5600C49F2E /* shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; path = shaders; sourceTree = "<group>"; };
+		9543590A25DB02B600C60E2F /* frag.spv */ = {isa = PBXFileReference; lastKnownFileType = file; path = frag.spv; sourceTree = "<group>"; };
+		9543590B25DB02B600C60E2F /* compile.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = compile.sh; sourceTree = "<group>"; };
+		9543590C25DB02B600C60E2F /* shader.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shader.vert; sourceTree = "<group>"; };
+		9543590D25DB02B600C60E2F /* shader.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shader.frag; sourceTree = "<group>"; };
+		9543590E25DB02B600C60E2F /* vert.spv */ = {isa = PBXFileReference; lastKnownFileType = file; path = vert.spv; sourceTree = "<group>"; };
+		9543590F25DB02B600C60E2F /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		954FB52825D208F800931DBA /* libvulkan.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libvulkan.1.dylib; path = ../../../../VulkanSDK/macOS/lib/libvulkan.1.dylib; sourceTree = "<group>"; };
 		954FB52A25D208FB00931DBA /* libvulkan.1.2.162.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libvulkan.1.2.162.dylib; path = ../../../../VulkanSDK/macOS/lib/libvulkan.1.2.162.dylib; sourceTree = "<group>"; };
 		954FB53725D20EF200931DBA /* libglfw.3.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.4.dylib; path = ../../../../../../usr/local/lib/libglfw.3.4.dylib; sourceTree = "<group>"; };
-		95C6802025968C9D0089EE1B /* VulkantTesting */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = VulkantTesting; sourceTree = BUILT_PRODUCTS_DIR; };
-		95C6802325968C9D0089EE1B /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		95C6802025968C9D0089EE1B /* VulkanTesting */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = VulkanTesting; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +68,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		954358D825DB02B600C60E2F /* VulkanTesting */ = {
+			isa = PBXGroup;
+			children = (
+				9543590925DB02B600C60E2F /* shaders */,
+				9543590F25DB02B600C60E2F /* main.cpp */,
+			);
+			path = VulkanTesting;
+			sourceTree = "<group>";
+		};
+		9543590925DB02B600C60E2F /* shaders */ = {
+			isa = PBXGroup;
+			children = (
+				9543590A25DB02B600C60E2F /* frag.spv */,
+				9543590B25DB02B600C60E2F /* compile.sh */,
+				9543590C25DB02B600C60E2F /* shader.vert */,
+				9543590D25DB02B600C60E2F /* shader.frag */,
+				9543590E25DB02B600C60E2F /* vert.spv */,
+			);
+			path = shaders;
+			sourceTree = "<group>";
+		};
 		954FB52425D208A300931DBA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -77,7 +102,7 @@
 		95C6801725968C9D0089EE1B = {
 			isa = PBXGroup;
 			children = (
-				95C6802225968C9D0089EE1B /* VulkantTesting */,
+				954358D825DB02B600C60E2F /* VulkanTesting */,
 				95C6802125968C9D0089EE1B /* Products */,
 				954FB52425D208A300931DBA /* Frameworks */,
 			);
@@ -86,26 +111,17 @@
 		95C6802125968C9D0089EE1B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				95C6802025968C9D0089EE1B /* VulkantTesting */,
+				95C6802025968C9D0089EE1B /* VulkanTesting */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		95C6802225968C9D0089EE1B /* VulkantTesting */ = {
-			isa = PBXGroup;
-			children = (
-				950E5EE425D88C5600C49F2E /* shaders */,
-				95C6802325968C9D0089EE1B /* main.cpp */,
-			);
-			path = VulkantTesting;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		95C6801F25968C9D0089EE1B /* VulkantTesting */ = {
+		95C6801F25968C9D0089EE1B /* VulkanTesting */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 95C6802725968C9D0089EE1B /* Build configuration list for PBXNativeTarget "VulkantTesting" */;
+			buildConfigurationList = 95C6802725968C9D0089EE1B /* Build configuration list for PBXNativeTarget "VulkanTesting" */;
 			buildPhases = (
 				95C6801D25968C9D0089EE1B /* Frameworks */,
 				954FB54825D33AD600931DBA /* CopyFiles */,
@@ -116,9 +132,9 @@
 			);
 			dependencies = (
 			);
-			name = VulkantTesting;
+			name = VulkanTesting;
 			productName = VulkantTesting;
-			productReference = 95C6802025968C9D0089EE1B /* VulkantTesting */;
+			productReference = 95C6802025968C9D0089EE1B /* VulkanTesting */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -135,7 +151,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 95C6801B25968C9D0089EE1B /* Build configuration list for PBXProject "VulkantTesting" */;
+			buildConfigurationList = 95C6801B25968C9D0089EE1B /* Build configuration list for PBXProject "VulkanTesting" */;
 			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -148,7 +164,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				95C6801F25968C9D0089EE1B /* VulkantTesting */,
+				95C6801F25968C9D0089EE1B /* VulkanTesting */,
 			);
 		};
 /* End PBXProject section */
@@ -158,7 +174,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				95C6802425968C9D0089EE1B /* main.cpp in Sources */,
+				9543591F25DB02B600C60E2F /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -362,7 +378,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		95C6801B25968C9D0089EE1B /* Build configuration list for PBXProject "VulkantTesting" */ = {
+		95C6801B25968C9D0089EE1B /* Build configuration list for PBXProject "VulkanTesting" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				95C6802525968C9D0089EE1B /* Debug */,
@@ -371,7 +387,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		95C6802725968C9D0089EE1B /* Build configuration list for PBXNativeTarget "VulkantTesting" */ = {
+		95C6802725968C9D0089EE1B /* Build configuration list for PBXNativeTarget "VulkanTesting" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				95C6802825968C9D0089EE1B /* Debug */,
