@@ -23,7 +23,7 @@ public:
         v2.colour = {0.0f, 0.0f, 1.0f};
         v3.colour = {1.0f, 0.0f, 0.0f};
 
-        indices = {0, 1, 3, 2};
+        indices = {1, 0, 2, 3};
 
         vertices.push_back(v0);
         vertices.push_back(v1);

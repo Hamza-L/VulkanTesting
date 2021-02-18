@@ -5,6 +5,12 @@ layout(location = 0) in vec3 fragColor;
 
 layout(location = 0) out vec4 outColor;
 
+layout(location = 1) in vec3 posforFrag;
+
+vec3 lightPos = {2.0f,2.0f,2.0f};
+
+vec3 eyePos = {0.0f, 0.0f, 4.0f};
+
 void main() {
     outColor = vec4(fragColor, 1.0);
 }

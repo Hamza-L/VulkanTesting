@@ -25,6 +25,17 @@ public:
         v6.pos = {0.5f, 0.5f, -0.5f};
         v7.pos = {-0.5f, 0.5f, -0.5f};
 
+        /*
+        v0.colour = {1.0f,0.0f,0.0f};
+        v1.colour = {0.0f,1.0f,0.0f};
+        v2.colour = {0.0f,0.0f,1.0f};
+        v3.colour = {1.0f,1.0f,0.0f};
+        v4.colour = {0.0f,1.0f,1.0f};
+        v5.colour = {1.0f,0.0f,1.0f};
+        v6.colour = {1.0f,1.0f,1.0f};
+        v7.colour = {1.0f,0.0f,0.0f};
+         */
+
         vertices.push_back(v0);
         vertices.push_back(v1);
         vertices.push_back(v2);
@@ -33,10 +44,16 @@ public:
         vertices.push_back(v5);
         vertices.push_back(v6);
         vertices.push_back(v7);
+
+        indices = {0,1,3,2,7,6,4,5,0,1,2,5,6,4,7,0,3};
     }
 
     std::vector<Vertex> getVert(){
         return vertices;
+    }
+
+    std::vector<uint16_t> getInd(){
+        return indices;
     }
 };
 

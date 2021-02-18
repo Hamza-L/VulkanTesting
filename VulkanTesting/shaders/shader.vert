@@ -6,7 +6,17 @@ layout(location = 0) out vec3 fragColor;
 layout(location = 0) in vec3 inPosition;
 layout(location = 1) in vec3 inColour;
 
+layout(binding = 0) uniform UniformBufferObject {
+    mat4 model;
+    mat4 view;
+    mat4 proj;
+} ubo;
+
+layout(location = 1) out vec3 posforFrag;
+
 void main() {
-    gl_Position = vec4(inPosition.x,-inPosition.y,inPosition.z, 1.0);
+    gl_Position = ubo.proj * ubo.view * ubo.model * vec4(inPosition, 1.0);
+    vec4 temp = ubo.view * ubo.model * vec4(inPosition, 1.0);
+    posforFrag = temp.xyz;
     fragColor = inColour;
 }
