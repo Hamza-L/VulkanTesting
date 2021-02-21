@@ -1,22 +1,12 @@
 #version 450
 #extension GL_ARB_separate_shader_objects : enable
 
-layout(location = 0) out vec3 fragColor;
-
-layout(location = 0) in vec3 inPosition;
-layout(location = 1) in vec3 inColour;
-
-layout(binding = 0) uniform UniformBufferObject {
-    mat4 model;
-    mat4 view;
-    mat4 proj;
-} ubo;
-
-layout(location = 1) out vec3 posforFrag;
+vec3 inPosition[3] = vec3[](
+vec3(0.5f,0.0f,0.0f),
+vec3(-0.5f,0.0f,0.0f),
+vec3(0.0f,-0.5f,0.0f)
+);
 
 void main() {
-    gl_Position = ubo.proj * ubo.view * ubo.model * vec4(inPosition, 1.0);
-    vec4 temp = ubo.view * ubo.model * vec4(inPosition, 1.0);
-    posforFrag = temp.xyz;
-    fragColor = inColour;
+    gl_Position = vec4(inPosition[gl_VertexIndex], 1.0);
 }
