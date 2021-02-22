@@ -11,13 +11,13 @@
 
 namespace hva {
 
-    class vulkanWindow {
+    class VulkanWindow{
     public:
-        vulkanWindow(int w, int h, std::string name);
-        ~vulkanWindow();
+        VulkanWindow(int w, int h, std::string name);
+        ~VulkanWindow();
 
-        vulkanWindow(const vulkanWindow &) = delete;
-        vulkanWindow &operator=(const vulkanWindow&) = delete;
+        VulkanWindow(const VulkanWindow &) = delete;
+        VulkanWindow &operator=(const VulkanWindow&) = delete;
 
         bool shouldClose(){ return glfwWindowShouldClose(window);};
         void rename(std::string name){
@@ -27,6 +27,11 @@ namespace hva {
         };
 
         void createWindowSurface(VkInstance instance, VkSurfaceKHR *surface);
+
+        VkExtent2D getExtent() {
+            return {static_cast<uint32_t>(width), static_cast<uint32_t>(height)};
+        };
+
     private:
         void initWindow();
 

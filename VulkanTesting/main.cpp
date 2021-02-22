@@ -10,7 +10,7 @@
 
 int main(){
 
-    hva::newVulkanApp app{};
+    hva::NewVulkanApp app{};
 
     try{
         app.run();

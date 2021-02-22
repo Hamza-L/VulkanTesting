@@ -8,22 +8,45 @@
 #include "vulkanWindow.h"
 #include "vulkanPipeline.h"
 #include "vulkanDevice.h"
+#include "vulkanSwapChain.h"
+#include "vulkanModel.h"
+
+//std
+#include <memory>
+#include <vector>
 
 namespace hva {
 
-    class newVulkanApp {
+    class NewVulkanApp {
     public:
-        static constexpr int WIDTH = 800;
-        static constexpr int HEIGHT = 600;
+        static constexpr int WIDTH = 1.5*800;
+        static constexpr int HEIGHT = 1.5*600;
+
+        NewVulkanApp();
+        ~NewVulkanApp();
+
+        NewVulkanApp(const NewVulkanApp&) = delete;
+        NewVulkanApp &operator=(const NewVulkanApp&) = delete;
 
         void run();
         void rename(std::string name){
-            vulkanWindow.rename(name);
+            VulkanWindow.rename(name);
         };
+        std::vector<VulkanModel::Vertex> subdivide(std::vector<VulkanModel::Vertex> triangle);
     private:
-        vulkanWindow vulkanWindow{WIDTH, HEIGHT, "VulkanApp"};
-        vulkanDevice device{vulkanWindow};
-        vulkanPipeline vulkanPipeline{device, "shaders/vert.spv","shaders/frag.spv", vulkanPipeline::defaultPipelineConfigInfo(WIDTH, HEIGHT)};
+        void loadModels();
+        void createPipelineLayout();
+        void createPipeline();
+        void createCommandBuffers();
+        void drawFrame();
+
+        VulkanWindow VulkanWindow{WIDTH, HEIGHT, "VulkanApp"};
+        VulkanDevice device{VulkanWindow};
+        VulkanSwapChain vulkanSwapChain{device, VulkanWindow.getExtent()};
+        std::unique_ptr<VulkanPipeline> vulkanPipeline;
+        VkPipelineLayout pipelineLayout;
+        std::vector<VkCommandBuffer> commandBuffers;
+        std::unique_ptr<VulkanModel> vulkanModel;
     };
 }
 

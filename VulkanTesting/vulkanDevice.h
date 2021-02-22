@@ -27,7 +27,7 @@ namespace hva {
         bool isComplete() { return graphicsFamilyHasValue && presentFamilyHasValue; }
     };
 
-    class vulkanDevice {
+    class VulkanDevice {
     public:
 #ifdef NDEBUG
         const bool enableValidationLayers = false;
@@ -35,14 +35,14 @@ namespace hva {
         const bool enableValidationLayers = true;
 #endif
 
-        vulkanDevice(hva::vulkanWindow &window);
-        ~vulkanDevice();
+        VulkanDevice(hva::VulkanWindow &window);
+        ~VulkanDevice();
 
         // Not copyable or movable
-        vulkanDevice(const vulkanDevice &) = delete;
-        void operator=(const vulkanDevice &) = delete;
-        vulkanDevice(vulkanDevice &&) = delete;
-        vulkanDevice &operator=(vulkanDevice &&) = delete;
+        VulkanDevice(const VulkanDevice &) = delete;
+        void operator=(const VulkanDevice &) = delete;
+        VulkanDevice(VulkanDevice &&) = delete;
+        VulkanDevice &operator=(VulkanDevice &&) = delete;
 
         VkCommandPool getCommandPool() { return commandPool; }
         VkDevice device() { return device_; }
@@ -98,7 +98,7 @@ namespace hva {
         VkInstance instance;
         VkDebugUtilsMessengerEXT debugMessenger;
         VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
-        hva::vulkanWindow &window;
+        hva::VulkanWindow &window;
         VkCommandPool commandPool;
 
         VkDevice device_;
@@ -107,7 +107,7 @@ namespace hva {
         VkQueue presentQueue_;
 
         const std::vector<const char *> validationLayers = {"VK_LAYER_KHRONOS_validation"};
-        const std::vector<const char *> deviceExtensions = {VK_KHR_SWAPCHAIN_EXTENSION_NAME};
+        const std::vector<const char *> deviceExtensions = {VK_KHR_SWAPCHAIN_EXTENSION_NAME,"VK_KHR_portability_subset"};
     };
 
 }  // namespace lve
