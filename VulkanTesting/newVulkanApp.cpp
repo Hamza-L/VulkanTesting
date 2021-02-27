@@ -35,12 +35,12 @@ namespace hva{
 
     void NewVulkanApp::loadModels() {
         std::vector<VulkanModel::Vertex> triangle{
-                {{-0.8f,-0.8f,0.0f}},
-                {{0.8f,-0.8f,0.0f}},
-                {{0.0f,0.8f,0.0f}}
+                {{-0.8f,-0.8f,0.0f},{1.0f,0.0f,0.0f}},
+                {{0.8f,-0.8f,0.0f},{0.0f,1.0f,0.0f}},
+                {{0.0f,0.8f,0.0f},{0.0f,0.0f,1.0f}}
         };
 
-        for (int i=0; i<9; i++){
+        for (int i=0; i<8; i++){
             triangle = subdivide(triangle);
         }
 
@@ -61,6 +61,10 @@ namespace hva{
             mid1.position = curr_triangle[0].position + (curr_triangle[1].position - curr_triangle[0].position) / 2.0f;
             mid2.position = curr_triangle[1].position + (curr_triangle[2].position - curr_triangle[1].position) / 2.0f;
             mid3.position = curr_triangle[2].position + (curr_triangle[0].position - curr_triangle[2].position) / 2.0f;
+
+            mid3.colour = curr_triangle[0].colour + (curr_triangle[1].colour - curr_triangle[0].colour) / 2.0f;
+            mid1.colour = curr_triangle[1].colour + (curr_triangle[2].colour - curr_triangle[1].colour) / 2.0f;
+            mid2.colour = curr_triangle[2].colour + (curr_triangle[0].colour - curr_triangle[2].colour) / 2.0f;
 
             subd_triangle.push_back(curr_triangle[0]);
             subd_triangle.push_back(mid1);
