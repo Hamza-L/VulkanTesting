@@ -19,10 +19,11 @@ vec2 cx_sqr(vec2 a) {
 }
 
 void main() {
-    vec2 c = 0.05f*vec2(pos.x*2.0f,pos.y)+vec2(-1.1f,0.23f);
+    //vec2 c = 0.05f*vec2(pos.x*2.0f,pos.y)+vec2(-1.1f,0.23f);
+    vec2 c = 0.001f*vec2(pos.x*2.0f,pos.y)+vec2(-1.11f,0.231f);
     vec2 z = vec2(0.0f);
     float limit = 0.0f;
-    float maxIter = 300.0f;
+    float maxIter = 1500.0f;
 
     for(int i=0; i<maxIter; i++){
         z = cx_sqr(z) + c;
@@ -34,9 +35,10 @@ void main() {
 
     //outColor = vec4(0.0f,0.0f , 0.0f, 1.0f);
 
-    if(limit>maxIter-1){
+    if(limit==maxIter){
         outColor = vec4(0.0f, 0.0f, 0.0f, 1.0f);
     } else {
-        outColor = vec4(limit/maxIter, (1.2f*limit/maxIter), (2*limit/maxIter), 1.0f);
+        outColor = vec4((limit+10.0f)/maxIter, (1.1f*limit/maxIter), (2*limit/maxIter), 1.0f);
+        outColor = pow(outColor, vec4(1.5f));
     }
 }
