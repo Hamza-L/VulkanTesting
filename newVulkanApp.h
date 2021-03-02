@@ -19,8 +19,8 @@ namespace hva {
 
     class NewVulkanApp {
     public:
-        static constexpr int WIDTH = 1.5*800;
-        static constexpr int HEIGHT = 1.5*600;
+        static constexpr int WIDTH = 1400;
+        static constexpr int HEIGHT = 700;
 
         NewVulkanApp();
         ~NewVulkanApp();

@@ -9,7 +9,7 @@
 #include <stdexcept>
 
 int main(){
-
+    
     hva::NewVulkanApp app{};
 
     try{

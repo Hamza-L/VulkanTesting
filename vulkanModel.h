@@ -24,9 +24,7 @@ namespace hva {
     public:
 
         struct Vertex{
-            glm::vec3 position{};
-            glm::vec3 colour{};
-            glm::vec3 norm{};
+            glm::vec2 position{};
 
             static std::vector<VkVertexInputBindingDescription> getBindingDescriptions();
             static std::vector<VkVertexInputAttributeDescription> getAttributeDescriptions();

@@ -11,6 +11,9 @@
 #include <array>
 #include <iostream>
 
+static constexpr float WIDTH = 1400;
+static constexpr float HEIGHT = 700;
+
 namespace hva{
 
     NewVulkanApp::NewVulkanApp() {
@@ -34,17 +37,31 @@ namespace hva{
     }
 
     void NewVulkanApp::loadModels() {
+        std::vector<VulkanModel::Vertex> grid{};
+        /*
         std::vector<VulkanModel::Vertex> triangle{
                 {{-0.8f,-0.8f,0.0f},{1.0f,0.0f,0.0f}},
                 {{0.8f,-0.8f,0.0f},{0.0f,1.0f,0.0f}},
                 {{0.0f,0.8f,0.0f},{0.0f,0.0f,1.0f}}
         };
 
-        for (int i=0; i<8; i++){
+        for (int i=0; i<1; i++){
             triangle = subdivide(triangle);
         }
+        */
 
-        vulkanModel = std::make_unique<VulkanModel>(device, triangle);
+        for(int x=0; x<WIDTH; x++){
+            for(int y=0; y<HEIGHT; y++){
+                float posx = 1-2*float(x)/WIDTH;
+                float posy = 1-2*float(y)/HEIGHT;
+                //std::cout<<posx<<","<<posy<<std::endl;
+                VulkanModel::Vertex v;
+                v.position = {posx,posy};
+                grid.push_back(v);
+            }
+        }
+
+        vulkanModel = std::make_unique<VulkanModel>(device, grid);
     }
 
     std::vector<VulkanModel::Vertex> NewVulkanApp::subdivide(std::vector<VulkanModel::Vertex> triangle){
@@ -62,9 +79,11 @@ namespace hva{
             mid2.position = curr_triangle[1].position + (curr_triangle[2].position - curr_triangle[1].position) / 2.0f;
             mid3.position = curr_triangle[2].position + (curr_triangle[0].position - curr_triangle[2].position) / 2.0f;
 
+            /*
             mid3.colour = curr_triangle[0].colour + (curr_triangle[1].colour - curr_triangle[0].colour) / 2.0f;
             mid1.colour = curr_triangle[1].colour + (curr_triangle[2].colour - curr_triangle[1].colour) / 2.0f;
             mid2.colour = curr_triangle[2].colour + (curr_triangle[0].colour - curr_triangle[2].colour) / 2.0f;
+             */
 
             subd_triangle.push_back(curr_triangle[0]);
             subd_triangle.push_back(mid1);

@@ -25,6 +25,7 @@ namespace hva{
         VkRenderPass renderPass = nullptr;
         uint32_t subpass = 0;
     };
+
     class VulkanPipeline{
     public:
         VulkanPipeline(VulkanDevice &device, const std::string &vertFilePath, const std::string &fragFilePath, const PipelineConfigInfo &configInfo);

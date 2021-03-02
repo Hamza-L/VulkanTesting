@@ -15,7 +15,6 @@ namespace hva {
     public:
         VulkanWindow(int w, int h, std::string name);
         ~VulkanWindow();
-
         VulkanWindow(const VulkanWindow &) = delete;
         VulkanWindow &operator=(const VulkanWindow&) = delete;
 
