@@ -3,7 +3,6 @@
 //
 
 #include "vulkanPipeline.h"
-#include "vulkanModel.h"
 
 //std
 #include <fstream>
@@ -71,8 +70,8 @@ namespace hva{
         shaderStages[1].pNext = nullptr;
         shaderStages[1].pSpecializationInfo = nullptr;
 
-        auto bindingDescriptions = VulkanModel::Vertex::getBindingDescriptions();
-        auto attributeDescriptions = VulkanModel::Vertex::getAttributeDescriptions();
+        auto bindingDescriptions = Vertex::getBindingDescriptions();
+        auto attributeDescriptions = Vertex::getAttributeDescriptions();
 
         VkPipelineVertexInputStateCreateInfo vertexInputInfo{};
         vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
@@ -88,22 +87,36 @@ namespace hva{
         viewportInfo.scissorCount = 1;
         viewportInfo.pScissors = &configInfo.scissor;
 
+        /*
+       // -- DYNAMIC STATE ENABLE
+       std::vector<VkDynamicState> dynamicStateEnables;
+       dynamicStateEnables.push_back(VK_DYNAMIC_STATE_VIEWPORT); //dynamic viewport. allows us to resize with VkCmdSetViewport(commandBuffer, 0, 1, &newViewPort)
+       dynamicStateEnables.push_back(VK_DYNAMIC_STATE_SCISSOR);  //dynamic scissor . allows us to resize with VkCmdSetScissor(commandBuffer, 0, 1, &newScissor)
+       // need to resize everything and destroy/recreate swapchain. All images must be resized.
+
+       VkPipelineDynamicStateCreateInfo dynamicStateCreateInfo = {};
+       dynamicStateCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
+       dynamicStateCreateInfo.dynamicStateCount = static_cast<uint32_t>(dynamicStateEnables.size());
+       dynamicStateCreateInfo.pDynamicStates = dynamicStateEnables.data();
+       */
+
         VkGraphicsPipelineCreateInfo pipelineInfo{};
         pipelineInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
-        pipelineInfo.stageCount = 2;
-        pipelineInfo.pStages = shaderStages;
-        pipelineInfo.pVertexInputState = &vertexInputInfo;
+        pipelineInfo.stageCount = 2;                                        // number of shader stages
+        pipelineInfo.pStages = shaderStages;                                // list of shader stages
+        pipelineInfo.pVertexInputState = &vertexInputInfo;                  // all the fixed function pipeline states
         pipelineInfo.pInputAssemblyState = &configInfo.inputAssemblyInfo;
         pipelineInfo.pViewportState = &viewportInfo;
+        pipelineInfo.pDynamicState = nullptr; //not used yet
         pipelineInfo.pMultisampleState = &configInfo.multisampleInfo;
         pipelineInfo.pRasterizationState = &configInfo.rasterizationInfo;
         pipelineInfo.pColorBlendState = &configInfo.colorBlendInfo;
         pipelineInfo.pDepthStencilState = &configInfo.depthStencilInfo;
         pipelineInfo.pDynamicState = nullptr;
 
-        pipelineInfo.layout = configInfo.pipelineLayout;
-        pipelineInfo.renderPass = configInfo.renderPass;
-        pipelineInfo.subpass = configInfo.subpass;
+        pipelineInfo.layout = configInfo.pipelineLayout;    // Pipeline Layout the pipeline should use.
+        pipelineInfo.renderPass = configInfo.renderPass;    // renderpass description the pipeline is compatible with
+        pipelineInfo.subpass = configInfo.subpass;          // subpass of renderpass
 
         pipelineInfo.basePipelineIndex = -1;
         pipelineInfo.basePipelineHandle = VK_NULL_HANDLE;
@@ -145,13 +158,13 @@ namespace hva{
         configInfo.scissor.extent = {width, height};
 
         configInfo.rasterizationInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
-        configInfo.rasterizationInfo.depthClampEnable = VK_FALSE;
-        configInfo.rasterizationInfo.rasterizerDiscardEnable = VK_FALSE;
+        configInfo.rasterizationInfo.depthClampEnable = VK_FALSE; //clamples fragment beyond far plane unto far plane (need GPU feature enabled)
+        configInfo.rasterizationInfo.rasterizerDiscardEnable = VK_FALSE; //removes the fragment stage. no image generated
         configInfo.rasterizationInfo.polygonMode = VK_POLYGON_MODE_FILL;
-        configInfo.rasterizationInfo.lineWidth = 1.0f;
-        configInfo.rasterizationInfo.cullMode = VK_CULL_MODE_NONE;
-        configInfo.rasterizationInfo.frontFace = VK_FRONT_FACE_CLOCKWISE;
-        configInfo.rasterizationInfo.depthBiasEnable = VK_FALSE;
+        configInfo.rasterizationInfo.lineWidth = 1.0f; // width of lines.
+        configInfo.rasterizationInfo.cullMode = VK_CULL_MODE_BACK_BIT; //culls a face of the triangle
+        configInfo.rasterizationInfo.frontFace = VK_FRONT_FACE_CLOCKWISE; //which way is front
+        configInfo.rasterizationInfo.depthBiasEnable = VK_FALSE; //depth bias to avoid "shadow acne"
         configInfo.rasterizationInfo.depthBiasConstantFactor = 0.0f;  // Optional
         configInfo.rasterizationInfo.depthBiasClamp = 0.0f;           // Optional
         configInfo.rasterizationInfo.depthBiasSlopeFactor = 0.0f;     // Optional
@@ -166,24 +179,26 @@ namespace hva{
 
         configInfo.colorBlendAttachment.colorWriteMask =
                 VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT |
-                VK_COLOR_COMPONENT_A_BIT;
-        configInfo.colorBlendAttachment.blendEnable = VK_FALSE;
-        configInfo.colorBlendAttachment.srcColorBlendFactor = VK_BLEND_FACTOR_ONE;   // Optional
-        configInfo.colorBlendAttachment.dstColorBlendFactor = VK_BLEND_FACTOR_ZERO;  // Optional
-        configInfo.colorBlendAttachment.colorBlendOp = VK_BLEND_OP_ADD;              // Optional
+                VK_COLOR_COMPONENT_A_BIT; //which colours in our image shall we apply the blending to
+        configInfo.colorBlendAttachment.blendEnable = VK_TRUE; //enable blending
+        //blending equation: (VK_BLEND_FACTOR_SRC_ALPHA * newColour) VK_BLEND_OP_ADD[+] (VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA * OldColour);
+        configInfo.colorBlendAttachment.srcColorBlendFactor = VK_BLEND_FACTOR_SRC_ALPHA;   // src
+        configInfo.colorBlendAttachment.dstColorBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;  // 1-src
+        configInfo.colorBlendAttachment.colorBlendOp = VK_BLEND_OP_ADD;              // a mathematical operation
+        //basically" ( 1 * newAlpha ) + ( 0 * oldAlpha) = newAlpha
         configInfo.colorBlendAttachment.srcAlphaBlendFactor = VK_BLEND_FACTOR_ONE;   // Optional
         configInfo.colorBlendAttachment.dstAlphaBlendFactor = VK_BLEND_FACTOR_ZERO;  // Optional
-        configInfo.colorBlendAttachment.alphaBlendOp = VK_BLEND_OP_ADD;              // Optional
+        configInfo.colorBlendAttachment.alphaBlendOp = VK_BLEND_OP_ADD;              // get rid of the old alpha and keep the new alpha.
 
         configInfo.colorBlendInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO;
         configInfo.colorBlendInfo.logicOpEnable = VK_FALSE;
-        configInfo.colorBlendInfo.logicOp = VK_LOGIC_OP_COPY;  // Optional
+        configInfo.colorBlendInfo.logicOp = VK_LOGIC_OP_COPY;  // we don't want to use the logical operator, we want to use the colorBlendAttachment instead
         configInfo.colorBlendInfo.attachmentCount = 1;
         configInfo.colorBlendInfo.pAttachments = &configInfo.colorBlendAttachment;
-        configInfo.colorBlendInfo.blendConstants[0] = 0.0f;  // Optional
-        configInfo.colorBlendInfo.blendConstants[1] = 0.0f;  // Optional
-        configInfo.colorBlendInfo.blendConstants[2] = 0.0f;  // Optional
-        configInfo.colorBlendInfo.blendConstants[3] = 0.0f;  // Optional
+        //configInfo.colorBlendInfo.blendConstants[0] = 0.0f;  // Optional
+        //configInfo.colorBlendInfo.blendConstants[1] = 0.0f;  // Optional
+        //configInfo.colorBlendInfo.blendConstants[2] = 0.0f;  // Optional
+        //configInfo.colorBlendInfo.blendConstants[3] = 0.0f;  // Optional
 
         configInfo.depthStencilInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO;
         configInfo.depthStencilInfo.depthTestEnable = VK_TRUE;

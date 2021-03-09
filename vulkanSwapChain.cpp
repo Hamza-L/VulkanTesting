@@ -57,27 +57,17 @@ namespace hva {
     }
 
     VkResult VulkanSwapChain::acquireNextImage(uint32_t *imageIndex) {
-        vkWaitForFences(
-                device.device(),
-                1,
-                &inFlightFences[currentFrame],
-                VK_TRUE,
-                std::numeric_limits<uint64_t>::max());
 
-        VkResult result = vkAcquireNextImageKHR(
-                device.device(),
-                swapChain,
-                std::numeric_limits<uint64_t>::max(),
-                imageAvailableSemaphores[currentFrame],  // must be a not signaled semaphore
-                VK_NULL_HANDLE,
-                imageIndex);
+        vkWaitForFences(device.device(),1,&inFlightFences[currentFrame], VK_TRUE, std::numeric_limits<uint64_t>::max());
+
+        VkResult result = vkAcquireNextImageKHR(device.device(), swapChain, std::numeric_limits<uint64_t>::max(),imageAvailableSemaphores[currentFrame],VK_NULL_HANDLE, imageIndex);
 
         return result;
     }
 
-    VkResult VulkanSwapChain::submitCommandBuffers(
-            const VkCommandBuffer *buffers, uint32_t *imageIndex) {
+    VkResult VulkanSwapChain::submitCommandBuffers(const VkCommandBuffer *buffers, uint32_t *imageIndex) {
         if (imagesInFlight[*imageIndex] != VK_NULL_HANDLE) {
+            //wait for given fence to open from draw call
             vkWaitForFences(device.device(), 1, &imagesInFlight[*imageIndex], VK_TRUE, UINT64_MAX);
         }
         imagesInFlight[*imageIndex] = inFlightFences[currentFrame];
@@ -87,17 +77,18 @@ namespace hva {
 
         VkSemaphore waitSemaphores[] = {imageAvailableSemaphores[currentFrame]};
         VkPipelineStageFlags waitStages[] = {VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT};
-        submitInfo.waitSemaphoreCount = 1;
-        submitInfo.pWaitSemaphores = waitSemaphores;
-        submitInfo.pWaitDstStageMask = waitStages;
+        submitInfo.waitSemaphoreCount = 1; //numbers of semaphore to wait after
+        submitInfo.pWaitSemaphores = waitSemaphores; //list of semaphore to wait on
+        submitInfo.pWaitDstStageMask = waitStages; //stages to check semaphore at
 
         submitInfo.commandBufferCount = 1;
-        submitInfo.pCommandBuffers = buffers;
+        submitInfo.pCommandBuffers = buffers; //command buffer to submit
 
         VkSemaphore signalSemaphores[] = {renderFinishedSemaphores[currentFrame]};
         submitInfo.signalSemaphoreCount = 1;
-        submitInfo.pSignalSemaphores = signalSemaphores;
+        submitInfo.pSignalSemaphores = signalSemaphores; //semaphore to signal when we are finished rendering.
 
+        //manually reset closed fence
         vkResetFences(device.device(), 1, &inFlightFences[currentFrame]);
         if (vkQueueSubmit(device.graphicsQueue(), 1, &submitInfo, inFlightFences[currentFrame]) !=
             VK_SUCCESS) {
@@ -114,7 +105,7 @@ namespace hva {
         presentInfo.swapchainCount = 1;
         presentInfo.pSwapchains = swapChains;
 
-        presentInfo.pImageIndices = imageIndex;
+        presentInfo.pImageIndices = imageIndex; //index of image in swapchain to present
 
         auto result = vkQueuePresentKHR(device.presentQueue(), &presentInfo);
 
@@ -216,48 +207,68 @@ namespace hva {
         depthAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
         depthAttachment.finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
 
-        VkAttachmentReference depthAttachmentRef{};
+        VkAttachmentDescription colorAttachment = {};
+        colorAttachment.format = getSwapChainImageFormat();     // format to use for attachment. obtained from swapchain
+        colorAttachment.samples = VK_SAMPLE_COUNT_1_BIT;        // from multisampling. number of samples to write.
+        colorAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;   // clear the image before we use it. describes what to do before rendering.
+        colorAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE; // store the image after we finished using it. describes what to do after rendering.
+        colorAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;    // we are not using depth stencil yet so we don't care
+        colorAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;  // same here. after rendering
+        //FrameBuffer data will be stored as an image but images can be given different data layout to give optimal use for certain operations.
+        // (ie shader read only format is different from screen format). here we have to define what layout the image has to be.
+        colorAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;          // it's just going to be any layout. we have no idea how it's gonna be before renderPass starts
+        // the layout format between starting the render pass and ending the render pass is the subpass layout.
+        colorAttachment.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;      // layout after renderPass. the source of the presentation to present to the surface. KHR is the extension for the surface.
+
+        VkAttachmentReference colorAttachmentRef = {}; //gives an indirect attachment to the colour attachment passed to the renderpass.
+        colorAttachmentRef.attachment = 0; //index of the attachment in the render pass. 1 would point to the depth stencil.
+        colorAttachmentRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL; // This layout will be optimal for colour output. We are expecting it to be converted from
+        // UNDEFINED when we defined the renderPass to the optimal color attachment for the first subpass.
+
+        VkAttachmentReference depthAttachmentRef{}; //gives an indirect attachment to the depth stencil attachment passed from the subpass.
         depthAttachmentRef.attachment = 1;
         depthAttachmentRef.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
 
-        VkAttachmentDescription colorAttachment = {};
-        colorAttachment.format = getSwapChainImageFormat();
-        colorAttachment.samples = VK_SAMPLE_COUNT_1_BIT;
-        colorAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
-        colorAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
-        colorAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-        colorAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-        colorAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-        colorAttachment.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
-
-        VkAttachmentReference colorAttachmentRef = {};
-        colorAttachmentRef.attachment = 0;
-        colorAttachmentRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-
         VkSubpassDescription subpass = {};
-        subpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
+        subpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS; // the point in the pipeline where it will bind. we want it to bind in the graphics pipeline.
         subpass.colorAttachmentCount = 1;
         subpass.pColorAttachments = &colorAttachmentRef;
         subpass.pDepthStencilAttachment = &depthAttachmentRef;
 
-        VkSubpassDependency dependency = {};
+        // Need to determine when layout transitions occur using subpass dependency. What does the subpass depend on before starting. ie we have a second subpass that needs the image to be a certain layout.
+        // we have external subpass by default. we need to make sure conversions are done before being used by the subpasses.
+        // in this case we need to convert: VK_IMAGE_LAYOUT_UNDEFINED -> VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL -> VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL -> VK_IMAGE_LAYOUT_PRESENT_SRC_KHR
+        std::array<VkSubpassDependency,2> dependencies = {};
+        dependencies[0].srcSubpass = VK_SUBPASS_EXTERNAL;
+        dependencies[0].srcStageMask = VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT; // pipeline stage
+        dependencies[0].srcAccessMask = VK_ACCESS_MEMORY_READ_BIT; // memory operation in this stage that needs to happen before this stage. we need to read it before converting it.
+        //the transition from UNDEFINED to OPTIMAL COLOUR after this^ and before thisv
+        dependencies[0].dstSubpass = 0; //go from EXTERNAL to the first subpass. We need to do the conversion before we get to subpass[0]
+        dependencies[0].dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+        dependencies[0].dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+        dependencies[0].dependencyFlags = 0;
+        //basically before we read and write we need to convert them. They are like substates of subpass.
 
-        dependency.dstSubpass = 0;
-        dependency.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
-        dependency.dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
-        dependency.srcSubpass = VK_SUBPASS_EXTERNAL;
-        dependency.srcAccessMask = 0;
-        dependency.srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+        dependencies[1].srcSubpass = 0;
+        dependencies[1].srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT; // pipeline stage
+        dependencies[1].srcAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT; // memory operation in this stage that needs to happen before this stage. we need to read it before converting it.
+        //the transition from UNDEFINED to OPTIMAL COLOUR after this^ and before thisv
+        dependencies[1].dstSubpass = VK_SUBPASS_EXTERNAL; //go from EXTERNAL to the first subpass. We need to do the conversion before we get to subpass[0]
+        dependencies[1].dstStageMask = VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT;
+        dependencies[1].dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT;
+        dependencies[1].dependencyFlags = 0;
+        //basically before we read and write we need to convert them. They are like substates of subpass.
 
-        std::array<VkAttachmentDescription, 2> attachments = {colorAttachment, depthAttachment};
+        std::array<VkAttachmentDescription, 2> attachments = {colorAttachment, depthAttachment}; //lets ignore the depth stencil for now
+        //std::array<VkAttachmentDescription, 1> attachments = {colorAttachment};
         VkRenderPassCreateInfo renderPassInfo = {};
         renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
         renderPassInfo.attachmentCount = static_cast<uint32_t>(attachments.size());
         renderPassInfo.pAttachments = attachments.data();
         renderPassInfo.subpassCount = 1;
         renderPassInfo.pSubpasses = &subpass;
-        renderPassInfo.dependencyCount = 1;
-        renderPassInfo.pDependencies = &dependency;
+        renderPassInfo.dependencyCount = static_cast<uint32_t>(dependencies.size());
+        renderPassInfo.pDependencies = dependencies.data();
 
         if (vkCreateRenderPass(device.device(), &renderPassInfo, nullptr, &renderPass) != VK_SUCCESS) {
             throw std::runtime_error("failed to create render pass!");
@@ -269,21 +280,17 @@ namespace hva {
         for (size_t i = 0; i < imageCount(); i++) {
             std::array<VkImageView, 2> attachments = {swapChainImageViews[i], depthImageViews[i]};
 
-            VkExtent2D swapChainExtent = getSwapChainExtent();
+            VkExtent2D swapChainExtentTemp = getSwapChainExtent();
             VkFramebufferCreateInfo framebufferInfo = {};
             framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
-            framebufferInfo.renderPass = renderPass;
-            framebufferInfo.attachmentCount = static_cast<uint32_t>(attachments.size());
-            framebufferInfo.pAttachments = attachments.data();
-            framebufferInfo.width = swapChainExtent.width;
-            framebufferInfo.height = swapChainExtent.height;
+            framebufferInfo.renderPass = renderPass;                                    //RenderPassLayout the framebuffer will be used with.
+            framebufferInfo.attachmentCount = static_cast<uint32_t>(attachments.size());//Number of attachments (1:1 with renderPass)
+            framebufferInfo.pAttachments = attachments.data();                          //list of attachments (1:1 w/ renderPass)
+            framebufferInfo.width = swapChainExtentTemp.width;
+            framebufferInfo.height = swapChainExtentTemp.height;
             framebufferInfo.layers = 1;
 
-            if (vkCreateFramebuffer(
-                    device.device(),
-                    &framebufferInfo,
-                    nullptr,
-                    &swapChainFramebuffers[i]) != VK_SUCCESS) {
+            if (vkCreateFramebuffer(device.device(), &framebufferInfo, nullptr,&swapChainFramebuffers[i]) != VK_SUCCESS) {
                 throw std::runtime_error("failed to create framebuffer!");
             }
         }
@@ -364,7 +371,7 @@ namespace hva {
     VkSurfaceFormatKHR VulkanSwapChain::chooseSwapSurfaceFormat(
             const std::vector<VkSurfaceFormatKHR> &availableFormats) {
         for (const auto &availableFormat : availableFormats) {
-            if (availableFormat.format == VK_FORMAT_B8G8R8A8_UNORM &&
+            if (availableFormat.format == VK_FORMAT_B8G8R8A8_SRGB &&
                 availableFormat.colorSpace == VK_COLOR_SPACE_SRGB_NONLINEAR_KHR) {
                 return availableFormat;
             }

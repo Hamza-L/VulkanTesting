@@ -6,6 +6,7 @@
 #define VULKANTESTING_VULKANPIPELINE_H
 
 #include "vulkanDevice.h"
+#include "vulkanModel.h"
 
 #include <string>
 #include <vector>

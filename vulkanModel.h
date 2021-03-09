@@ -10,6 +10,7 @@
 #define VULKANTESTING_VULKANMODEL_H
 
 #include "vulkanDevice.h"
+#include "shapes/vert.h"
 
 //glm
 #define GLM_FORCE_RADIANS
@@ -22,17 +23,6 @@
 namespace hva {
     class VulkanModel{
     public:
-
-        struct Vertex{
-            glm::vec3 position{};
-            glm::vec3 colour{};
-            glm::vec3 norm{};
-
-            static std::vector<VkVertexInputBindingDescription> getBindingDescriptions();
-            static std::vector<VkVertexInputAttributeDescription> getAttributeDescriptions();
-
-        };
-
         VulkanModel(VulkanDevice &device, const std::vector<Vertex> &vertices);
         ~VulkanModel();
 

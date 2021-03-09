@@ -4,6 +4,10 @@
 
 #include "newVulkanApp.h"
 
+#include "shapes/Plane.h"
+#include "shapes/Cube.h"
+#include "glm/glm.hpp"
+
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
@@ -29,34 +33,42 @@ namespace hva{
             glfwPollEvents();
             drawFrame();
         }
-
         vkDeviceWaitIdle(device.device()); //wait until all GPU operations have been completed
     }
 
     void NewVulkanApp::loadModels() {
-        std::vector<VulkanModel::Vertex> triangle{
+
+        //Plane rectangle1 = Plane(glm::rotate(glm::mat4(1.0f), glm::radians(45.0f), glm::vec3(0.0f, 0.0f, 1.0f)));
+        Cube rectangle;
+        Plane p1;
+        glm::mat4 M = glm::rotate(glm::mat4(1.0f),glm::radians(50.0f),glm::vec3(1.0f,1.0f,0.0f));
+        rectangle.transform(M);
+
+        /*
+        std::vector<Vertex> triangle{
                 {{-0.8f,-0.8f,0.0f},{1.0f,0.0f,0.0f}},
-                {{0.8f,-0.8f,0.0f},{0.0f,1.0f,0.0f}},
-                {{0.0f,0.8f,0.0f},{0.0f,0.0f,1.0f}}
+                {{0.0f,0.8f,0.0f},{0.0f,1.0f,0.0f}},
+                {{0.8f,-0.8f,0.0f},{0.0f,0.0f,1.0f}}
         };
 
         for (int i=0; i<8; i++){
             triangle = subdivide(triangle);
         }
+         */
 
-        vulkanModel = std::make_unique<VulkanModel>(device, triangle);
+        vulkanModel = std::make_unique<VulkanModel>(device, rectangle.getVert());
     }
 
-    std::vector<VulkanModel::Vertex> NewVulkanApp::subdivide(std::vector<VulkanModel::Vertex> triangle){
+    std::vector<Vertex> NewVulkanApp::subdivide(std::vector<Vertex> triangle){
         uint16_t numTriangle = triangle.size()/3;
-        std::vector<VulkanModel::Vertex> subd_triangle;
-        std::vector<VulkanModel::Vertex> curr_triangle;
+        std::vector<Vertex> subd_triangle;
+        std::vector<Vertex> curr_triangle;
 
         for (int i=0; i<numTriangle; i++) {
             curr_triangle.push_back(triangle[3*i]);
             curr_triangle.push_back(triangle[3*i+1]);
             curr_triangle.push_back(triangle[3*i+2]);
-            VulkanModel::Vertex mid1{}, mid2{}, mid3{};
+            Vertex mid1{}, mid2{}, mid3{};
 
             mid1.position = curr_triangle[0].position + (curr_triangle[1].position - curr_triangle[0].position) / 2.0f;
             mid2.position = curr_triangle[1].position + (curr_triangle[2].position - curr_triangle[1].position) / 2.0f;
@@ -112,7 +124,7 @@ namespace hva{
 
         VkCommandBufferAllocateInfo allocateInfo{};
         allocateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
-        allocateInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
+        allocateInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY; //submitted directly to queue. can't be called by other command buffers.
         allocateInfo.commandPool = device.getCommandPool();
         allocateInfo.commandBufferCount = static_cast<uint32_t>(commandBuffers.size());
 
@@ -120,35 +132,41 @@ namespace hva{
             throw std::runtime_error("failed to allocate command buffers");
         }
 
-        for (int i=0; i<commandBuffers.size(); i++){
-            VkCommandBufferBeginInfo beginInfo{};
-            beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
+        VkCommandBufferBeginInfo beginInfo{};
+        beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
+        //beginInfo.flags = VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT; //buffer can be re-submitted when it has already been submitted on the queue and is awaiting for execution.
 
+        //info on how to begin the render pass. only used for graphical application
+        VkRenderPassBeginInfo renderPassInfo{};
+        renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
+        renderPassInfo.renderPass = vulkanSwapChain.getRenderPass();
+        renderPassInfo.renderArea.offset = {0,0};
+        renderPassInfo.renderArea.extent = vulkanSwapChain.getSwapChainExtent();
+
+        std::array<VkClearValue, 2> clearValues{};
+        clearValues[0].color = {0.005f, 0.005f, 0.005f, 1.0f};
+        clearValues[1].depthStencil = {1.0f, 0};
+        renderPassInfo.clearValueCount = static_cast<uint32_t>(clearValues.size());
+        renderPassInfo.pClearValues = clearValues.data();
+
+        for (int i=0; i<commandBuffers.size(); i++){
+
+            //start recording command to command buffer!
             if (vkBeginCommandBuffer(commandBuffers[i], &beginInfo) != VK_SUCCESS){
                 throw std::runtime_error("failed to begin recording");
             }
 
-            VkRenderPassBeginInfo renderPassInfo{};
-            renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
-            renderPassInfo.renderPass = vulkanSwapChain.getRenderPass();
             renderPassInfo.framebuffer = vulkanSwapChain.getFrameBuffer(i);
 
-            renderPassInfo.renderArea.offset = {0,0};
-            renderPassInfo.renderArea.extent = vulkanSwapChain.getSwapChainExtent();
+            vkCmdBeginRenderPass(commandBuffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE); //starts by clearing the image with the clearValue
 
-            std::array<VkClearValue, 2> clearValues{};
-            clearValues[0].color = {0.1f, 0.1f, 0.1f, 1.0f};
-            clearValues[1].depthStencil = {1.0f, 0};
-            renderPassInfo.clearValueCount = static_cast<uint32_t>(clearValues.size());
-            renderPassInfo.pClearValues = clearValues.data();
-
-            vkCmdBeginRenderPass(commandBuffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
-
-            vulkanPipeline->bind(commandBuffers[i]);
-            vulkanModel->bind(commandBuffers[i]);
-            vulkanModel->draw(commandBuffers[i]);
+                vulkanPipeline->bind(commandBuffers[i]);
+                vulkanModel->bind(commandBuffers[i]);
+                vulkanModel->draw(commandBuffers[i]);
 
             vkCmdEndRenderPass(commandBuffers[i]);
+
+            // ends the recording of the command buffer!
             if (vkEndCommandBuffer(commandBuffers[i]) != VK_SUCCESS){
                 throw std::runtime_error("failed to record command buffer");
             }

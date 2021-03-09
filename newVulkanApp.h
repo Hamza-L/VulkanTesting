@@ -32,7 +32,7 @@ namespace hva {
         void rename(std::string name){
             VulkanWindow.rename(name);
         };
-        std::vector<VulkanModel::Vertex> subdivide(std::vector<VulkanModel::Vertex> triangle);
+        std::vector<Vertex> subdivide(std::vector<Vertex> triangle);
     private:
         void loadModels();
         void createPipelineLayout();
@@ -43,6 +43,7 @@ namespace hva {
         VulkanWindow VulkanWindow{WIDTH, HEIGHT, "VulkanApp"};
         VulkanDevice device{VulkanWindow};
         VulkanSwapChain vulkanSwapChain{device, VulkanWindow.getExtent()};
+
         std::unique_ptr<VulkanPipeline> vulkanPipeline;
         VkPipelineLayout pipelineLayout;
         std::vector<VkCommandBuffer> commandBuffers;
