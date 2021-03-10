@@ -5,9 +5,9 @@
 #ifndef VULKANTESTING_PLANE_H
 #define VULKANTESTING_PLANE_H
 
-#include "Shape.h"
+#include "Primitive.h"
 
-class Plane : public Shape{
+class Plane : public Primitive {
 private:
 public:
     Plane(){
