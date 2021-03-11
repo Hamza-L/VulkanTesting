@@ -1,0 +1,62 @@
+//
+// Created by Hamza Lahmimsi on 2021-03-09.
+//
+
+#ifndef VULKANTESTING_NODE_H
+#define VULKANTESTING_NODE_H
+
+#include "vert.h"
+#include <glm/gtc/matrix_transform.hpp>
+#include <iostream>
+
+class Node {
+protected:
+    std::vector<Node> children{};
+    std::vector<Vertex> vertices;
+    std::vector<uint16_t> indices;
+    glm::mat4 Model = glm::mat4(1.0f);
+    glm::mat4 MinvT = glm::mat4(1.0f);
+public:
+
+    void addChild(const Node& child){
+        children.push_back(child);
+    }
+
+    virtual void transform(glm::mat4 M){
+        Model = M * Model;
+        MinvT = glm::transpose(glm::inverse(Model));
+        for (Node child : children){
+            child.transform(M);
+        }
+    }
+
+    virtual std::vector<Vertex> getVert() {
+        std::vector<Vertex> outVert;
+        glm::vec4 tempPos;
+        glm::vec4 tempNorm;
+        for (auto & v : vertices){
+            tempPos = Model * glm::vec4(v.position,1.0f);
+            tempNorm = MinvT * glm::vec4(v.norm,0.0f);
+            v.position = glm::vec3(tempPos.x, tempPos.y, tempPos.z);
+            v.norm = glm::vec3(tempNorm.x, tempNorm.y, tempNorm.z);
+            outVert.push_back(v);
+        }
+        for (Node child : children){
+            for(Vertex v : child.getVert()){
+                tempPos = Model * glm::vec4(v.position,1.0f);
+                tempNorm = MinvT * glm::vec4(v.norm,0.0f);
+                v.position = glm::vec3(tempPos.x, tempPos.y, tempPos.z);
+                v.norm = glm::vec3(tempNorm.x, tempNorm.y, tempNorm.z);
+                outVert.push_back(v);
+            }
+        }
+        return outVert;
+    }
+
+    virtual std::vector<uint16_t> getInd() {
+        return indices;
+    }
+
+};
+
+#endif //VULKANTESTING_NODE_H

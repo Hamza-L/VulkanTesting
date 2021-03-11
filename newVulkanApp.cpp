@@ -39,10 +39,30 @@ namespace hva{
     void NewVulkanApp::loadModels() {
 
         //Plane rectangle1 = Plane(glm::rotate(glm::mat4(1.0f), glm::radians(45.0f), glm::vec3(0.0f, 0.0f, 1.0f)));
-        Cube rectangle;
-        Plane p1;
-        glm::mat4 M = glm::rotate(glm::mat4(1.0f),glm::radians(50.0f),glm::vec3(1.0f,1.0f,0.0f));
-        rectangle.transform(M);
+        Node node,scene;
+        Cube rect1, rect2, rect3, rect4;
+        Plane p1(glm::translate(glm::mat4(1.0f),glm::vec3(0.0f,0.0f,0.0f)) * glm::rotate(glm::mat4(1.0f),glm::radians(-90.0f),glm::vec3(1.0f,0.0f,0.0f)));
+        glm::mat4 M = glm::translate(glm::mat4(1.0f),glm::vec3(1.0f,1.0f,0.0f));
+        rect1.transform(M);
+        M = glm::translate(glm::mat4(1.0f),glm::vec3(-1.0f,1.0f,0.0f));
+        rect2.transform(M);
+        M = glm::translate(glm::mat4(1.0f),glm::vec3(1.0f,-1.0f,0.0f));
+        rect3.transform(M);
+        M = glm::translate(glm::mat4(1.0f),glm::vec3(-1.0f,-1.0f,0.0f));
+        rect4.transform(M);
+
+        node.addChild(rect1);
+        node.addChild(rect2);
+        node.addChild(rect3);
+        node.addChild(rect4);
+
+        M = glm::scale(glm::rotate(glm::mat4(1.0f),glm::radians(45.0f),glm::vec3(1.0f,1.0f,0.0f)),glm::vec3(0.5f,0.5f,0.5f));
+        node.transform(M);
+
+        M = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f,-2.0f,0.0f)) * glm::scale(glm::mat4(1.0f),glm::vec3(50.0f));
+        p1.transform(M);
+        scene.addChild(node);
+        //scene.addChild(p1);
 
         /*
         std::vector<Vertex> triangle{
@@ -56,7 +76,7 @@ namespace hva{
         }
          */
 
-        vulkanModel = std::make_unique<VulkanModel>(device, rectangle.getVert());
+        vulkanModel = std::make_unique<VulkanModel>(device, scene.getVert());
     }
 
     std::vector<Vertex> NewVulkanApp::subdivide(std::vector<Vertex> triangle){

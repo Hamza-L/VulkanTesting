@@ -5,10 +5,9 @@
 #ifndef VULKANTESTING_PLANE_H
 #define VULKANTESTING_PLANE_H
 
-#include "Primitive.h"
+#include "Node.h"
 
-class Plane : public Primitive {
-private:
+class Plane : public Node {
 public:
     Plane(){
         Vertex v0,v1,v2,v3;
@@ -113,14 +112,6 @@ public:
         vertices.push_back(v0);
         vertices.push_back(v2);
         vertices.push_back(v3);
-    }
-
-    std::vector<Vertex> getVert(){
-        return vertices;
-    }
-
-    std::vector<uint16_t> getInd(){
-        return indices;
     }
 };
 

@@ -6,12 +6,10 @@
 #define VULKANTESTING_CUBE_H
 
 #include <vector>
-#include "Plane.h"
+#include "Node.h"
 #include <iostream>
 
-class Cube {
-private:
-    std::vector<Plane> planes;
+class Cube : public Node{
 public:
     Cube(){
         Plane p1 = Plane(glm::translate(glm::mat4(1.0f),glm::vec3(0.0f,0.5f,0.0f)) * glm::rotate(glm::mat4(1.0f),glm::radians(-90.0f),glm::vec3(1.0f,0.0f,0.0f)),
@@ -27,38 +25,37 @@ public:
         Plane p6 = Plane(glm::translate(glm::mat4(1.0f),glm::vec3(-0.5f,0.0f,0.0f)) * glm::rotate(glm::mat4(1.0f),glm::radians(-90.0f),glm::vec3(0.0f,1.0f,0.0f)),
                          glm::vec3(1.0f,0.0f,0.0f));
 
-        planes.push_back(p1);
-        planes.push_back(p2);
-        planes.push_back(p3);
-        planes.push_back(p4);
-        planes.push_back(p5);
-        planes.push_back(p6);
-    }
+        children.push_back(p1);
+        children.push_back(p2);
+        children.push_back(p3);
+        children.push_back(p4);
+        children.push_back(p5);
+        children.push_back(p6);
 
-    std::vector<Vertex> getVert(){
+    }
+    std::vector<Vertex> getVert() override{
         std::vector<Vertex> vertices;
-        for (Primitive s : planes){
-            for(Vertex v : s.getVert()){
+        for(auto & face : children){
+            for (auto & v : face.getVert()){
                 vertices.push_back(v);
             }
         }
         return vertices;
     }
 
-    std::vector<uint16_t> getInd(){
+    std::vector<uint16_t> getInd() override{
         std::vector<uint16_t> indices;
-        for (Primitive s : planes){
-            for(uint16_t i : s.getInd()){
-                indices.push_back(i);
+        for(auto & face : children){
+            for (auto & ind : face.getInd()){
+                indices.push_back(ind);
             }
         }
         return indices;
     }
 
-    void transform(glm::mat4 M){
-        auto temp = glm::vec4(0.0f);
-        for (int i = 0; i<planes.size(); i++){
-            planes[i].transform(M);
+    void transform(glm::mat4 M) override{
+        for(auto & face : children){
+            face.transform(M);
         }
     }
 };
