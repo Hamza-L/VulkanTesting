@@ -17,8 +17,7 @@ protected:
     glm::mat4 Model = glm::mat4(1.0f);
     glm::mat4 MinvT = glm::mat4(1.0f);
 public:
-
-    void addChild(const Node& child){
+    void addChild(Node& child){
         children.push_back(child);
     }
 
@@ -41,6 +40,7 @@ public:
             v.norm = glm::vec3(tempNorm.x, tempNorm.y, tempNorm.z);
             outVert.push_back(v);
         }
+
         for (Node child : children){
             for(Vertex v : child.getVert()){
                 tempPos = Model * glm::vec4(v.position,1.0f);
@@ -54,7 +54,19 @@ public:
     }
 
     virtual std::vector<uint16_t> getInd() {
-        return indices;
+        std::vector<uint16_t> outInd;
+        int offset = 0;
+        for (auto & ind : indices){
+            outInd.push_back(ind);
+        }
+        offset = vertices.size();
+        for(Node child : children){
+            for (auto & ind : child.getInd()){
+                outInd.push_back(ind+offset);
+            }
+            offset+=child.getVert().size();
+        }
+        return outInd;
     }
 
 };

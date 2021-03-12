@@ -10,6 +10,8 @@
 #include "vulkanDevice.h"
 #include "vulkanSwapChain.h"
 #include "vulkanModel.h"
+#include "shapes/Plane.h"
+#include "shapes/Cube.h"
 
 //std
 #include <memory>
@@ -33,6 +35,7 @@ namespace hva {
             VulkanWindow.rename(name);
         };
         std::vector<Vertex> subdivide(std::vector<Vertex> triangle);
+        Node subdivideNode ( Node sourceNode);
     private:
         void loadModels();
         void createPipelineLayout();

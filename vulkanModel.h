@@ -23,7 +23,7 @@
 namespace hva {
     class VulkanModel{
     public:
-        VulkanModel(VulkanDevice &device, const std::vector<Vertex> &vertices);
+        VulkanModel(VulkanDevice &device, const std::vector<Vertex> &vertices, const std::vector<uint16_t>& indices, VkQueue transferQueue, VkCommandPool transferCommandPool);
         ~VulkanModel();
 
         VulkanModel(const VulkanModel&) = delete;
@@ -32,13 +32,25 @@ namespace hva {
         void bind(VkCommandBuffer commandBuffer);
         void draw(VkCommandBuffer commandBuffer);
 
+        void bindIndexed(VkCommandBuffer commandBuffer);
+        void drawIndexed(VkCommandBuffer commandBuffer);
+
     private:
-        void createVertexBuffers(const std::vector<Vertex> &vertices);
+        void createVertexBuffers(const std::vector<Vertex> &vertices, VkQueue transferQueue, VkCommandPool transferCommandPool);
+        void createindexBuffers(const std::vector<uint16_t> &indices, VkQueue transferQueue, VkCommandPool transferCommandPool);
+
 
         VulkanDevice &device;
         VkBuffer vertexBuffer;
         VkDeviceMemory vertexBufferMemory;
         uint32_t vertexCount;
+
+        VkBuffer indexBuffer;
+        VkDeviceMemory indexBufferMemory;
+        uint32_t indexCount;
+
+        VkBuffer stagingBuffer;
+        VkDeviceMemory stagingBufferMemory;
     };
 }
 

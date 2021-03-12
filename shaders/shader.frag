@@ -8,7 +8,7 @@ layout(location = 2) in vec3 positionForFP;
 layout(location = 0) out vec4 outColor;
 
 vec3 eye = normalize(vec3(0.0f, 0.0f, 2.5f));
-vec3 lightPos = vec3(0.0f, 2.0f, 5.0f);
+vec3 lightPos = vec3(1.0f, -3.0f, 2.0f);
 
 void main() {
     vec3 lightDirection = normalize( lightPos - positionForFP );

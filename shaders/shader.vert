@@ -28,7 +28,7 @@ void main() {
     fragColour = inColour;
 
     vec4 tempPos = V * vec4(0.75f*position.x, -position.y, position.z, 1.0);
-    vec4 tempNorm = V * vec4(norm, 0.0f);
+    vec4 tempNorm = V * vec4(norm.x, -norm.y, norm.z, 0.0f);
     positionForFP = tempPos.xyz;
     normalForFP = normalize(tempNorm.xyz);
 }

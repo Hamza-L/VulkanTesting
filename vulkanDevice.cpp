@@ -396,12 +396,12 @@ namespace hva {
         throw std::runtime_error("failed to find supported format!");
     }
 
-    uint32_t VulkanDevice::findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties) {
+    uint32_t VulkanDevice::findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags inProperties) {
         VkPhysicalDeviceMemoryProperties memProperties;
         vkGetPhysicalDeviceMemoryProperties(physicalDevice, &memProperties);
         for (uint32_t i = 0; i < memProperties.memoryTypeCount; i++) {
             if ((typeFilter & (1 << i)) &&
-                (memProperties.memoryTypes[i].propertyFlags & properties) == properties) {
+                (memProperties.memoryTypes[i].propertyFlags & inProperties) == inProperties) {
                 return i;
             }
         }
@@ -412,14 +412,14 @@ namespace hva {
     void VulkanDevice::createBuffer(
             VkDeviceSize size,
             VkBufferUsageFlags usage,
-            VkMemoryPropertyFlags properties,
+            VkMemoryPropertyFlags inProperties,
             VkBuffer &buffer,
             VkDeviceMemory &bufferMemory) {
         VkBufferCreateInfo bufferInfo{};
         bufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
         bufferInfo.size = size;
         bufferInfo.usage = usage;
-        bufferInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+        bufferInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE; //similar to swap chain images. only one thing using it at a time.
 
         if (vkCreateBuffer(device_, &bufferInfo, nullptr, &buffer) != VK_SUCCESS) {
             throw std::runtime_error("failed to create vertex buffer!");
@@ -431,7 +431,7 @@ namespace hva {
         VkMemoryAllocateInfo allocInfo{};
         allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
         allocInfo.allocationSize = memRequirements.size;
-        allocInfo.memoryTypeIndex = findMemoryType(memRequirements.memoryTypeBits, properties);
+        allocInfo.memoryTypeIndex = findMemoryType(memRequirements.memoryTypeBits, inProperties);
 
         if (vkAllocateMemory(device_, &allocInfo, nullptr, &bufferMemory) != VK_SUCCESS) {
             throw std::runtime_error("failed to allocate vertex buffer memory!");
@@ -440,11 +440,11 @@ namespace hva {
         vkBindBufferMemory(device_, buffer, bufferMemory, 0);
     }
 
-    VkCommandBuffer VulkanDevice::beginSingleTimeCommands() {
+    VkCommandBuffer VulkanDevice::beginSingleTimeCommands(VkCommandPool inCommandPool) {
         VkCommandBufferAllocateInfo allocInfo{};
         allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
         allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-        allocInfo.commandPool = commandPool;
+        allocInfo.commandPool = inCommandPool;
         allocInfo.commandBufferCount = 1;
 
         VkCommandBuffer commandBuffer;
@@ -452,28 +452,28 @@ namespace hva {
 
         VkCommandBufferBeginInfo beginInfo{};
         beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
-        beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
+        beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT; // we're only using the command buffer once
 
         vkBeginCommandBuffer(commandBuffer, &beginInfo);
         return commandBuffer;
     }
 
-    void VulkanDevice::endSingleTimeCommands(VkCommandBuffer commandBuffer) {
-        vkEndCommandBuffer(commandBuffer);
+    void VulkanDevice::endSingleTimeCommands(VkCommandBuffer inCommandBuffer, VkQueue transferQueue, VkCommandPool inCommandPool) {
+        vkEndCommandBuffer(inCommandBuffer);
 
         VkSubmitInfo submitInfo{};
         submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
         submitInfo.commandBufferCount = 1;
-        submitInfo.pCommandBuffers = &commandBuffer;
+        submitInfo.pCommandBuffers = &inCommandBuffer;
 
-        vkQueueSubmit(graphicsQueue_, 1, &submitInfo, VK_NULL_HANDLE);
-        vkQueueWaitIdle(graphicsQueue_);
+        vkQueueSubmit(transferQueue, 1, &submitInfo, VK_NULL_HANDLE);
+        vkQueueWaitIdle(transferQueue);
 
-        vkFreeCommandBuffers(device_, commandPool, 1, &commandBuffer);
+        vkFreeCommandBuffers(device_, inCommandPool, 1, &inCommandBuffer);
     }
 
-    void VulkanDevice::copyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size) {
-        VkCommandBuffer commandBuffer = beginSingleTimeCommands();
+    void VulkanDevice::copyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size, VkQueue transferQueue, VkCommandPool transferCommandPool) {
+        VkCommandBuffer commandBuffer = beginSingleTimeCommands(transferCommandPool);
 
         VkBufferCopy copyRegion{};
         copyRegion.srcOffset = 0;  // Optional
@@ -481,12 +481,12 @@ namespace hva {
         copyRegion.size = size;
         vkCmdCopyBuffer(commandBuffer, srcBuffer, dstBuffer, 1, &copyRegion);
 
-        endSingleTimeCommands(commandBuffer);
+        endSingleTimeCommands(commandBuffer, transferQueue, transferCommandPool);
     }
 
     void VulkanDevice::copyBufferToImage(
             VkBuffer buffer, VkImage image, uint32_t width, uint32_t height, uint32_t layerCount) {
-        VkCommandBuffer commandBuffer = beginSingleTimeCommands();
+        VkCommandBuffer commandBuffer = beginSingleTimeCommands(commandPool);
 
         VkBufferImageCopy region{};
         region.bufferOffset = 0;
@@ -508,7 +508,7 @@ namespace hva {
                 VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
                 1,
                 &region);
-        endSingleTimeCommands(commandBuffer);
+        endSingleTimeCommands(commandBuffer, graphicsQueue_, commandPool);
     }
 
     void VulkanDevice::createImageWithInfo(

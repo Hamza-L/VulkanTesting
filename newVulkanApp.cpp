@@ -4,8 +4,6 @@
 
 #include "newVulkanApp.h"
 
-#include "shapes/Plane.h"
-#include "shapes/Cube.h"
 #include "glm/glm.hpp"
 
 #define GLFW_INCLUDE_VULKAN
@@ -38,45 +36,51 @@ namespace hva{
 
     void NewVulkanApp::loadModels() {
 
-        //Plane rectangle1 = Plane(glm::rotate(glm::mat4(1.0f), glm::radians(45.0f), glm::vec3(0.0f, 0.0f, 1.0f)));
-        Node node,scene;
-        Cube rect1, rect2, rect3, rect4;
-        Plane p1(glm::translate(glm::mat4(1.0f),glm::vec3(0.0f,0.0f,0.0f)) * glm::rotate(glm::mat4(1.0f),glm::radians(-90.0f),glm::vec3(1.0f,0.0f,0.0f)));
-        glm::mat4 M = glm::translate(glm::mat4(1.0f),glm::vec3(1.0f,1.0f,0.0f));
-        rect1.transform(M);
-        M = glm::translate(glm::mat4(1.0f),glm::vec3(-1.0f,1.0f,0.0f));
-        rect2.transform(M);
-        M = glm::translate(glm::mat4(1.0f),glm::vec3(1.0f,-1.0f,0.0f));
-        rect3.transform(M);
-        M = glm::translate(glm::mat4(1.0f),glm::vec3(-1.0f,-1.0f,0.0f));
-        rect4.transform(M);
+        Node test;
+        Cube rect1;
 
-        node.addChild(rect1);
-        node.addChild(rect2);
-        node.addChild(rect3);
-        node.addChild(rect4);
-
-        M = glm::scale(glm::rotate(glm::mat4(1.0f),glm::radians(45.0f),glm::vec3(1.0f,1.0f,0.0f)),glm::vec3(0.5f,0.5f,0.5f));
-        node.transform(M);
-
-        M = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f,-2.0f,0.0f)) * glm::scale(glm::mat4(1.0f),glm::vec3(50.0f));
-        p1.transform(M);
-        scene.addChild(node);
-        //scene.addChild(p1);
-
-        /*
-        std::vector<Vertex> triangle{
-                {{-0.8f,-0.8f,0.0f},{1.0f,0.0f,0.0f}},
-                {{0.0f,0.8f,0.0f},{0.0f,1.0f,0.0f}},
-                {{0.8f,-0.8f,0.0f},{0.0f,0.0f,1.0f}}
-        };
-
-        for (int i=0; i<8; i++){
-            triangle = subdivide(triangle);
+        test.addChild(rect1);
+        for (int i=0; i<2; i++){
+            test = subdivideNode(test);
         }
-         */
 
-        vulkanModel = std::make_unique<VulkanModel>(device, scene.getVert());
+        glm::mat4 M = glm::rotate(glm::mat4(1.0f),glm::radians(45.0f),glm::vec3(1.0f,1.0f,0.0f));
+        test.transform(M);
+
+        std::cout<<"the number of vertices is: "<<test.getVert().size()<<std::endl;
+        std::cout<<"the number of indices is: "<<test.getInd().size()<<std::endl;
+
+        vulkanModel = std::make_unique<VulkanModel>(device, test.getVert(), test.getInd() , device.graphicsQueue(), device.getCommandPool());
+    }
+
+    Node NewVulkanApp::subdivideNode(Node sourceNode) {
+        Node node1, node2, node3, node4, outNode, tempNode;
+        node1 = sourceNode;
+        node2 = sourceNode;
+        node3 = sourceNode;
+        node4 = sourceNode;
+
+        glm::mat4 M = glm::scale(glm::mat4(1.0f),glm::vec3(0.5f,0.5f,0.5f)) * glm::translate(glm::mat4(1.0f),glm::vec3(1.0f,1.0f,0.0f));
+        node1.transform(M);
+        M = glm::scale(glm::mat4(1.0f),glm::vec3(0.5f,0.5f,0.5f)) * glm::translate(glm::mat4(1.0f),glm::vec3(-1.0f,1.0f,0.0f));
+        node2.transform(M);
+        M = glm::scale(glm::mat4(1.0f),glm::vec3(0.5f,0.5f,0.5f)) * glm::translate(glm::mat4(1.0f),glm::vec3(1.0f,-1.0f,0.0f));
+        node3.transform(M);
+        M = glm::scale(glm::mat4(1.0f),glm::vec3(0.5f,0.5f,0.5f)) * glm::translate(glm::mat4(1.0f),glm::vec3(-1.0f,-1.0f,0.0f));
+        node4.transform(M);
+
+        tempNode.addChild(node1);
+        tempNode.addChild(node2);
+        tempNode.addChild(node3);
+        tempNode.addChild(node4);
+
+        outNode.addChild(tempNode);
+
+        M =  glm::translate(glm::mat4(1.0f), glm::vec3(0.0f,0.0f,-1.0f));
+        tempNode.transform(M);
+        outNode.addChild(tempNode);
+
+        return outNode;
     }
 
     std::vector<Vertex> NewVulkanApp::subdivide(std::vector<Vertex> triangle){
@@ -182,7 +186,8 @@ namespace hva{
 
                 vulkanPipeline->bind(commandBuffers[i]);
                 vulkanModel->bind(commandBuffers[i]);
-                vulkanModel->draw(commandBuffers[i]);
+                vulkanModel->bindIndexed(commandBuffers[i]);
+                vulkanModel->drawIndexed(commandBuffers[i]);
 
             vkCmdEndRenderPass(commandBuffers[i]);
 

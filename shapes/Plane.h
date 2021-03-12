@@ -26,14 +26,22 @@ public:
         v2.norm = {0.0f, 0.0f, 1.0f};
         v3.norm = {0.0f, 0.0f, 1.0f};
 
-        indices = {1, 0, 2, 3};
+        //indices = {0, 1, 2, 0, 2, 3};
+
+        indices.push_back(0);
+        indices.push_back(1);
+        indices.push_back(2);
+        indices.push_back(0);
+        indices.push_back(2);
+        indices.push_back(3);
+
 
         vertices.push_back(v0);
         vertices.push_back(v1);
         vertices.push_back(v2);
-        vertices.push_back(v0);
-        vertices.push_back(v2);
         vertices.push_back(v3);
+        //vertices.push_back(v2);
+        //vertices.push_back(v3);
     }
 
     Plane(glm::mat4 M){
@@ -65,14 +73,20 @@ public:
         v2.norm = glm::vec3(t2.x,t2.y,t2.z);
         v3.norm = glm::vec3(t3.x,t3.y,t3.z);
 
-        indices = {1, 0, 2, 3};
+        //indices = {0, 1, 2, 0, 2, 3};
+        indices.push_back(0);
+        indices.push_back(1);
+        indices.push_back(2);
+        indices.push_back(0);
+        indices.push_back(2);
+        indices.push_back(3);
 
         vertices.push_back(v0);
         vertices.push_back(v1);
         vertices.push_back(v2);
-        vertices.push_back(v0);
-        vertices.push_back(v2);
         vertices.push_back(v3);
+        //vertices.push_back(v2);
+        //vertices.push_back(v3);
     }
 
     Plane(glm::mat4 M, glm::vec3 colour){
@@ -104,12 +118,16 @@ public:
         v2.norm = glm::vec3(t2.x,t2.y,t2.z);
         v3.norm = glm::vec3(t3.x,t3.y,t3.z);
 
-        indices = {1, 0, 2, 3};
+        //indices = {0, 1, 2, 0, 2, 3};
+        indices.push_back(0);
+        indices.push_back(1);
+        indices.push_back(2);
+        indices.push_back(0);
+        indices.push_back(2);
+        indices.push_back(3);
 
         vertices.push_back(v0);
         vertices.push_back(v1);
-        vertices.push_back(v2);
-        vertices.push_back(v0);
         vertices.push_back(v2);
         vertices.push_back(v3);
     }

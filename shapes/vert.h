@@ -24,18 +24,18 @@ struct Vertex{
 
     static std::vector<VkVertexInputBindingDescription> getBindingDescriptions() {
         std::vector<VkVertexInputBindingDescription> bindingDescriptions(1);
-        bindingDescriptions[0].binding = 0;
-        bindingDescriptions[0].stride = sizeof(Vertex);
-        bindingDescriptions[0].inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
+        bindingDescriptions[0].binding = 0; //can bind multiple stream of Data. this defines which one.
+        bindingDescriptions[0].stride = sizeof(Vertex); //size of individual vertex object. how much data does it need to skip over to get to the next vertex
+        bindingDescriptions[0].inputRate = VK_VERTEX_INPUT_RATE_VERTEX; //draw one vertex at a time; how to move from vertex to vertex. can make it move to a vertex for the next instance.
         return bindingDescriptions;
     }
 
     static std::vector<VkVertexInputAttributeDescription> getAttributeDescriptions() {
         std::vector<VkVertexInputAttributeDescription> attributeDescriptions(3);
-        attributeDescriptions[0].binding = 0;
-        attributeDescriptions[0].location = 0;
-        attributeDescriptions[0].format = VK_FORMAT_R32G32B32_SFLOAT;
-        attributeDescriptions[0].offset = offsetof(Vertex, position);
+        attributeDescriptions[0].binding = 0; //which binding is the attribute at
+        attributeDescriptions[0].location = 0; //location where the attribute is bound (seen in the vertex shader)
+        attributeDescriptions[0].format = VK_FORMAT_R32G32B32_SFLOAT; //format of the attribute
+        attributeDescriptions[0].offset = offsetof(Vertex, position); //how much data it occupies.
 
         attributeDescriptions[1].binding = 0;
         attributeDescriptions[1].location = 1;

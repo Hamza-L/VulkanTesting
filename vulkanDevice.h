@@ -63,9 +63,9 @@ namespace hva {
                 VkMemoryPropertyFlags properties,
                 VkBuffer &buffer,
                 VkDeviceMemory &bufferMemory);
-        VkCommandBuffer beginSingleTimeCommands();
-        void endSingleTimeCommands(VkCommandBuffer commandBuffer);
-        void copyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size);
+        VkCommandBuffer beginSingleTimeCommands(VkCommandPool transferCommandPool);
+        void endSingleTimeCommands(VkCommandBuffer commandBuffer, VkQueue transferQueue, VkCommandPool inCommandPool);
+        void copyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size, VkQueue transferQueue, VkCommandPool transferCommandPool);
         void copyBufferToImage(
                 VkBuffer buffer, VkImage image, uint32_t width, uint32_t height, uint32_t layerCount);
 
