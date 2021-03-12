@@ -1,0 +1,3 @@
+/Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/cmake-build-debug/CMakeFiles/VulkanTesting.dir

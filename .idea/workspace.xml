@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
+    <generated>
+      <config projectName="VulkanTesting" targetName="VulkanTesting" />
+    </generated>
+  </component>
+  <component name="CMakeSettings" AUTO_RELOAD="true">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" ENABLED="true" />
+      <configuration PROFILE_NAME="Release" CONFIG_NAME="Release" ENABLED="true" />
+      <configuration PROFILE_NAME="Debug-Coverage" CONFIG_NAME="Debug" GENERATION_OPTIONS="-DCMAKE_CXX_FLAGS=&quot;-fprofile-instr-generate -fcoverage-mapping&quot; -DCMAKE_C_FLAGS=&quot;-fprofile-instr-generate -fcoverage-mapping&quot;" ENABLED="true" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="0337ae03-f340-42ef-b2a4-3a3e95540f00" name="Default Changelist" comment="removal of unused files" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" show_ignored="true">
+    <option name="groupingKeys">
+      <option value="directory" />
+    </option>
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="Git.Settings">
+    <favorite-branches>
+      <branch-storage>
+        <map>
+          <entry type="REMOTE">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="VulkanTesting/Cube" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </favorite-branches>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="Mandelbrot" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="ProjectId" id="1p4WaFl0pLzJNcxhQFp5tcQyMLk" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="ChangesTree.GroupingKeys" value="" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="cf.first.check.clang-format" value="false" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="RunManager" selected="CMake Application.VulkanTesting">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="VulkanTesting" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" WORKING_DIR="file://$ContentRoot$" PASS_PARENT_ENVS_2="true" PROJECT_NAME="VulkanTesting" TARGET_NAME="VulkanTesting" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="VulkanTesting" RUN_TARGET_NAME="VulkanTesting">
+      <envs>
+        <env name="VK_ICD_FILENAMES" value="$USER_HOME$/VulkanSDK/macOS/share/vulkan/icd.d/MoltenVK_icd.json" />
+        <env name="VK_LAYER_PATH" value="$USER_HOME$/VulkanSDK/macOS/share/vulkan/explicit_layer.d" />
+      </envs>
+      <method v="2">
+        <option name="RunConfigurationTask" enabled="true" run_configuration_name="compile.sh" run_configuration_type="ShConfigurationType" />
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="compile.sh" type="ShConfigurationType">
+      <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
+      <option name="SCRIPT_PATH" value="$PROJECT_DIR$/shaders/compile.sh" />
+      <option name="SCRIPT_OPTIONS" value="" />
+      <option name="INDEPENDENT_SCRIPT_WORKING_DIRECTORY" value="true" />
+      <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$/shaders" />
+      <option name="INDEPENDENT_INTERPRETER_PATH" value="true" />
+      <option name="INTERPRETER_PATH" value="/bin/zsh" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="EXECUTE_IN_TERMINAL" value="true" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="CMake Application.VulkanTesting" />
+      <item itemvalue="Shell Script.compile.sh" />
+    </list>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0337ae03-f340-42ef-b2a4-3a3e95540f00" name="Default Changelist" comment="" />
+      <created>1614442906359</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1614442906359</updated>
+      <workItem from="1614442908641" duration="1282000" />
+      <workItem from="1614449190721" duration="12000" />
+      <workItem from="1614449445832" duration="10000" />
+      <workItem from="1614450423750" duration="45000" />
+      <workItem from="1614469934413" duration="87000" />
+      <workItem from="1614470298050" duration="357000" />
+      <workItem from="1614470919028" duration="25000" />
+      <workItem from="1614471590558" duration="352000" />
+      <workItem from="1614472887763" duration="353000" />
+      <workItem from="1614474501412" duration="69000" />
+      <workItem from="1614575015038" duration="185000" />
+      <workItem from="1614638773324" duration="13461000" />
+      <workItem from="1614707629818" duration="494000" />
+      <workItem from="1614711606918" duration="2784000" />
+      <workItem from="1614714899089" duration="2226000" />
+      <workItem from="1614742457339" duration="7757000" />
+      <workItem from="1614821599470" duration="13053000" />
+      <workItem from="1614980480453" duration="213000" />
+      <workItem from="1614985885994" duration="22000" />
+      <workItem from="1615006796664" duration="6379000" />
+      <workItem from="1615075902296" duration="2999000" />
+      <workItem from="1615144791951" duration="32072000" />
+      <workItem from="1615268235573" duration="16909000" />
+      <workItem from="1615345274314" duration="2450000" />
+      <workItem from="1615394329331" duration="7407000" />
+      <workItem from="1615439861861" duration="11910000" />
+      <workItem from="1615520503725" duration="14278000" />
+    </task>
+    <task id="LOCAL-00001" summary="Small changes">
+      <created>1614639190252</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1614639190252</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Mandelbrot Vulkan Implementation.">
+      <created>1614664449266</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1614664449266</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Mandelbrot Vulkan Implementation.">
+      <created>1614665074268</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1614665074268</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Mandelbrot Vulkan Implementation.">
+      <created>1614707453825</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1614707453825</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Follow Udemy Vulkan Course">
+      <created>1615075965978</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1615075965978</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Successful render of a red cube.&#10;Indexed vertices not yet implemented&#10;have yet to implement uniform buffers.">
+      <created>1615332351624</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1615332351624</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Successful render of a red cube.&#10;Indexed vertices not yet implemented&#10;have yet to implement uniform buffers.">
+      <created>1615336679964</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1615336679965</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Primitive.h added to the shape directory">
+      <created>1615336779897</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1615336779897</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Node architecture for shapes has been implemented.">
+      <created>1615433766769</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1615433766769</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Indexed node has been implemented as well as staging buffer for vertices/indices to allow for GPU local memory optimization.">
+      <created>1615573873925</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1615573873925</updated>
+    </task>
+    <task id="LOCAL-00011" summary="removal of unused files">
+      <created>1615574153895</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1615574153895</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="VulkanTesting/Cube" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/../.." />
+      <path value="$PROJECT_DIR$/.." />
+    </ignored-roots>
+    <MESSAGE value="Small changes" />
+    <MESSAGE value="Mandelbrot Vulkan Implementation." />
+    <MESSAGE value="Follow Udemy Vulkan Course" />
+    <MESSAGE value="Successful render of a red cube.&#10;Indexed vertices not yet implemented&#10;have yet to implement uniform buffers." />
+    <MESSAGE value="Primitive.h added to the shape directory" />
+    <MESSAGE value="Node architecture for shapes has been implemented." />
+    <MESSAGE value="Indexed node has been implemented as well as staging buffer for vertices/indices to allow for GPU local memory optimization." />
+    <MESSAGE value="removal of unused files" />
+    <option name="LAST_COMMIT_MESSAGE" value="removal of unused files" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="../../../../Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/cmake-build-debug-coverage" NAME="VulkanTesting Coverage Results" MODIFIED="1615077661067" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="gcov/llvm" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+</project>
