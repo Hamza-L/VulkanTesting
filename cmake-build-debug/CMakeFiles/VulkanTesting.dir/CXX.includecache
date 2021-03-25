@@ -6,16 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/main.cpp
-newVulkanApp.h
-/Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/newVulkanApp.h
-cstdlib
--
-iostream
--
-stdexcept
--
-
 /Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/newVulkanApp.cpp
 newVulkanApp.h
 /Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/newVulkanApp.h
@@ -28,6 +18,10 @@ stdexcept
 array
 -
 iostream
+-
+mm_malloc.h
+-
+cstdlib
 -
 
 /Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/newVulkanApp.h
@@ -45,9 +39,15 @@ shapes/Plane.h
 /Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/shapes/Plane.h
 shapes/Cube.h
 /Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/shapes/Cube.h
+shapes/Icosahedron.h
+/Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/shapes/Icosahedron.h
 memory
 -
 vector
+-
+glm/gtc/matrix_transform.hpp
+-
+chrono
 -
 
 /Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/shapes/Cube.h
@@ -57,6 +57,10 @@ Node.h
 /Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/shapes/Node.h
 iostream
 -
+
+/Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/shapes/Icosahedron.h
+Node.h
+/Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/shapes/Node.h
 
 /Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/shapes/Node.h
 vert.h
@@ -78,34 +82,12 @@ glm/glm.hpp
 vector
 -
 
-/Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/vulkanDevice.cpp
-vulkanDevice.h
-/Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/vulkanDevice.h
-cstring
--
-iostream
--
-set
--
-unordered_set
--
-
 /Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/vulkanDevice.h
 vulkanWindow.h
 /Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/vulkanWindow.h
 string
 -
 vector
--
-
-/Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/vulkanModel.cpp
-vulkanModel.h
-/Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/vulkanModel.h
-cassert
--
-cstring
--
-iostream
 -
 
 /Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/vulkanModel.h
@@ -118,18 +100,6 @@ glm/glm.hpp
 vector
 -
 
-/Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/vulkanPipeline.cpp
-vulkanPipeline.h
-/Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/vulkanPipeline.h
-fstream
--
-stdexcept
--
-iostream
--
-cassert
--
-
 /Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/vulkanPipeline.h
 vulkanDevice.h
 /Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/vulkanDevice.h
@@ -140,24 +110,6 @@ string
 vector
 -
 
-/Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/vulkanSwapChain.cpp
-vulkanSwapChain.h
-/Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/vulkanSwapChain.h
-array
--
-cstdlib
--
-cstring
--
-iostream
--
-limits
--
-set
--
-stdexcept
--
-
 /Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/vulkanSwapChain.h
 vulkanDevice.h
 /Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/vulkanDevice.h
@@ -166,12 +118,6 @@ vulkan/vulkan.h
 string
 -
 vector
--
-
-/Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/vulkanWindow.cpp
-vulkanWindow.h
-/Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/vulkanWindow.h
-stdexcept
 -
 
 /Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/vulkanWindow.h

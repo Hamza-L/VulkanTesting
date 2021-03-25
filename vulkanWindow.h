@@ -5,6 +5,8 @@
 #ifndef VULKANTESTING_VULKANWINDOW_H
 #define VULKANTESTING_VULKANWINDOW_H
 
+#define GLM_FORCE_DEPTH_ZERO_TO_ONE
+
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 #include <string>
@@ -20,6 +22,7 @@ namespace hva {
         VulkanWindow &operator=(const VulkanWindow&) = delete;
 
         bool shouldClose(){ return glfwWindowShouldClose(window);};
+        GLFWwindow* getWindow(){return window;}
         void rename(std::string name){
             windowName = name;
             glfwDestroyWindow(window);

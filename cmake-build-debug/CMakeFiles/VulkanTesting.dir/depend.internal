@@ -5,6 +5,7 @@ CMakeFiles/VulkanTesting.dir/main.cpp.o
  /Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/main.cpp
  /Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/newVulkanApp.h
  /Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/shapes/Cube.h
+ /Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/shapes/Icosahedron.h
  /Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/shapes/Node.h
  /Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/shapes/Plane.h
  /Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/shapes/vert.h
@@ -197,6 +198,7 @@ CMakeFiles/VulkanTesting.dir/newVulkanApp.cpp.o
  /Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/newVulkanApp.cpp
  /Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/newVulkanApp.h
  /Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/shapes/Cube.h
+ /Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/shapes/Icosahedron.h
  /Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/shapes/Node.h
  /Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/shapes/Plane.h
  /Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/shapes/vert.h

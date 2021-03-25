@@ -5,30 +5,40 @@ layout(location = 0) in vec3 position; //signals that the data comes from a vert
 layout(location = 1) in vec3 inColour;
 layout(location = 2) in vec3 norm;
 
+layout(binding = 0) uniform UboVP { //fixed ubo
+    mat4 V;
+    mat4 P;
+    vec4 lightPos;
+}uboVP; //uniform across al vertex
+
+layout(push_constant) uniform pushObj{
+    mat4 M;
+    mat4 MinvT;
+}pObj;
+//not in use. left for reference.
+/*
+layout(binding = 1) uniform Ubo{ //dynamic ubo that varies with each object
+    mat4 M;
+    mat4 MinvT;
+}ubo;
+*/
+
 layout(location = 0) out vec3 fragColour;
 layout(location = 1) out vec3 normalForFP;
 layout(location = 2) out vec3 positionForFP;
-
-mat4 V = {
-vec4(1.0f,0.0f,0.0f,0.0f),
-vec4(0.0f,1.0f,0.0f,0.0f),
-vec4(0.0f,0.0f,1.0f,0.0f),
-vec4(0.0f,0.0f,-2.5f,1.0f),
-};
-
-mat4 P = {
-vec4(1.0f,0.0f,0.0f,0.0f),
-vec4(0.0f,1.0f,0.0f,0.0f),
-vec4(0.0f,0.0f,-2.0f,-1.0f),
-vec4(0.0f,0.0f,-3.0f,1.0f),
-};
+layout(location = 3) out vec3 lightPos;
 
 void main() {
-    gl_Position = P * V * vec4(0.75f*position.x, -position.y, position.z, 1.0);
-    fragColour = inColour;
 
-    vec4 tempPos = V * vec4(0.75f*position.x, -position.y, position.z, 1.0);
-    vec4 tempNorm = V * vec4(norm.x, -norm.y, norm.z, 0.0f);
+    gl_Position = uboVP.P * uboVP.V * pObj.M * vec4(position, 1.0);
+    fragColour = inColour;
+    //fragColour = vec3(uboVP.M[0][0],uboVP.M[1][1],uboVP.M[2][2]);
+    //fragColour = vec3(1.0f,1.0f,1.0f);
+
+    vec4 tempLPos = uboVP.V * uboVP.lightPos;
+    lightPos = tempLPos.xyz;
+    vec4 tempPos = uboVP.V * pObj.M * vec4(position, 1.0);
     positionForFP = tempPos.xyz;
+    vec4 tempNorm = uboVP.V * pObj.MinvT * vec4(norm, 0.0f);
     normalForFP = normalize(tempNorm.xyz);
 }

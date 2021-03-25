@@ -148,9 +148,9 @@ namespace hva{
         configInfo.inputAssemblyInfo.primitiveRestartEnable = VK_FALSE;
 
         configInfo.viewport.x = 0.0f;
-        configInfo.viewport.y = 0.0f;
+        configInfo.viewport.y = static_cast<float>(height);
         configInfo.viewport.width = static_cast<float>(width);
-        configInfo.viewport.height = static_cast<float>(height);
+        configInfo.viewport.height = -static_cast<float>(height);
         configInfo.viewport.minDepth = 0.0f;
         configInfo.viewport.maxDepth = 1.0f;
 
@@ -201,15 +201,15 @@ namespace hva{
         //configInfo.colorBlendInfo.blendConstants[3] = 0.0f;  // Optional
 
         configInfo.depthStencilInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO;
-        configInfo.depthStencilInfo.depthTestEnable = VK_TRUE;
-        configInfo.depthStencilInfo.depthWriteEnable = VK_TRUE;
-        configInfo.depthStencilInfo.depthCompareOp = VK_COMPARE_OP_LESS;
-        configInfo.depthStencilInfo.depthBoundsTestEnable = VK_FALSE;
+        configInfo.depthStencilInfo.depthTestEnable = VK_TRUE; //enable checking depth to see if fragment pizel should be rendered.
+        configInfo.depthStencilInfo.depthWriteEnable = VK_TRUE; //can we replace the value with a new depth value. we want to update the depth value so we can add objects.
+        configInfo.depthStencilInfo.depthCompareOp = VK_COMPARE_OP_LESS; //how we compare depth value.
+        configInfo.depthStencilInfo.depthBoundsTestEnable = VK_FALSE; //depth bound test.. does the depth value exists between two bounds.
         configInfo.depthStencilInfo.minDepthBounds = 0.0f;  // Optional
         configInfo.depthStencilInfo.maxDepthBounds = 1.0f;  // Optional
-        configInfo.depthStencilInfo.stencilTestEnable = VK_FALSE;
-        configInfo.depthStencilInfo.front = {};  // Optional
-        configInfo.depthStencilInfo.back = {};   // Optional
+        configInfo.depthStencilInfo.stencilTestEnable = VK_FALSE; //disabled for now.
+        configInfo.depthStencilInfo.front = {};  // Optional used for stencils
+        configInfo.depthStencilInfo.back = {};   // Optional used for stencils
 
         return configInfo;
     }

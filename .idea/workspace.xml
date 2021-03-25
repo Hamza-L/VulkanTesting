@@ -9,46 +9,74 @@
     <configurations>
       <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" ENABLED="true" />
       <configuration PROFILE_NAME="Release" CONFIG_NAME="Release" ENABLED="true" />
-      <configuration PROFILE_NAME="Debug-Coverage" CONFIG_NAME="Debug" GENERATION_OPTIONS="-DCMAKE_CXX_FLAGS=&quot;-fprofile-instr-generate -fcoverage-mapping&quot; -DCMAKE_C_FLAGS=&quot;-fprofile-instr-generate -fcoverage-mapping&quot;" ENABLED="true" />
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0337ae03-f340-42ef-b2a4-3a3e95540f00" name="Default Changelist" comment="removal of unused files" />
+    <list default="true" id="bb4ec630-8892-4a4e-b112-4b1e5a758c19" name="Default Changelist" comment="removal of unused files">
+      <change afterPath="$PROJECT_DIR$/.idea/VulkanTesting.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace 2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shapes/Icosahedron.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/VulkanTesting.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/VulkanTesting.dir/CXX.includecache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/VulkanTesting.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/VulkanTesting.dir/depend.internal" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/VulkanTesting.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/VulkanTesting.dir/depend.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/VulkanTesting.dir/main.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/VulkanTesting.dir/main.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/VulkanTesting.dir/newVulkanApp.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/VulkanTesting.dir/newVulkanApp.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/VulkanTesting.dir/vulkanDevice.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/VulkanTesting.dir/vulkanDevice.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/VulkanTesting.dir/vulkanModel.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/VulkanTesting.dir/vulkanModel.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/VulkanTesting.dir/vulkanPipeline.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/VulkanTesting.dir/vulkanPipeline.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/VulkanTesting.dir/vulkanSwapChain.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/VulkanTesting.dir/vulkanSwapChain.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/VulkanTesting.dir/vulkanWindow.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/VulkanTesting.dir/vulkanWindow.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/VulkanTesting" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/VulkanTesting" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/VulkanTesting.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/VulkanTesting.cbp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/Makefile.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/VulkanTesting.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/VulkanTesting.dir/depend.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/clion-log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/VulkanTesting.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-release/VulkanTesting.cbp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/newVulkanApp.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/newVulkanApp.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/newVulkanApp.h" beforeDir="false" afterPath="$PROJECT_DIR$/newVulkanApp.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shaders/frag.spv" beforeDir="false" afterPath="$PROJECT_DIR$/shaders/frag.spv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shaders/shader.frag" beforeDir="false" afterPath="$PROJECT_DIR$/shaders/shader.frag" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shaders/shader.vert" beforeDir="false" afterPath="$PROJECT_DIR$/shaders/shader.vert" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shaders/vert.spv" beforeDir="false" afterPath="$PROJECT_DIR$/shaders/vert.spv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shapes/Cube.h" beforeDir="false" afterPath="$PROJECT_DIR$/shapes/Cube.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shapes/Node.h" beforeDir="false" afterPath="$PROJECT_DIR$/shapes/Node.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shapes/Plane.h" beforeDir="false" afterPath="$PROJECT_DIR$/shapes/Plane.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shapes/Triangle.h" beforeDir="false" afterPath="$PROJECT_DIR$/shapes/Triangle.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vulkanDevice.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/vulkanDevice.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vulkanDevice.h" beforeDir="false" afterPath="$PROJECT_DIR$/vulkanDevice.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vulkanModel.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/vulkanModel.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vulkanModel.h" beforeDir="false" afterPath="$PROJECT_DIR$/vulkanModel.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vulkanPipeline.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/vulkanPipeline.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vulkanSwapChain.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/vulkanSwapChain.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vulkanSwapChain.h" beforeDir="false" afterPath="$PROJECT_DIR$/vulkanSwapChain.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vulkanWindow.h" beforeDir="false" afterPath="$PROJECT_DIR$/vulkanWindow.h" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ChangesViewManager" show_ignored="true">
-    <option name="groupingKeys">
-      <option value="directory" />
-    </option>
-  </component>
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
-  <component name="Git.Settings">
-    <favorite-branches>
-      <branch-storage>
-        <map>
-          <entry type="REMOTE">
-            <value>
-              <list>
-                <branch-info repo="$PROJECT_DIR$" source="VulkanTesting/Cube" />
-              </list>
-            </value>
-          </entry>
-        </map>
-      </branch-storage>
-    </favorite-branches>
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="Mandelbrot" />
-      </map>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CMakeLists.txt" />
+      </list>
     </option>
+  </component>
+  <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
@@ -58,21 +86,23 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
-  <component name="ProjectId" id="1p4WaFl0pLzJNcxhQFp5tcQyMLk" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectId" id="1pfblK7eZEoIqGE0ezqLQpOEV2Y" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="ChangesTree.GroupingKeys" value="" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.first.check.clang-format" value="false" />
     <property name="node.js.detected.package.eslint" value="true" />
-    <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -81,12 +111,7 @@
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RunManager" selected="CMake Application.VulkanTesting">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="VulkanTesting" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" WORKING_DIR="file://$ContentRoot$" PASS_PARENT_ENVS_2="true" PROJECT_NAME="VulkanTesting" TARGET_NAME="VulkanTesting" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="VulkanTesting" RUN_TARGET_NAME="VulkanTesting">
+    <configuration name="VulkanTesting" type="CMakeRunConfiguration" factoryName="Application" singleton="false" REDIRECT_INPUT="false" ELEVATE="false" WORKING_DIR="file://$ContentRoot$" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="VulkanTesting" RUN_TARGET_NAME="VulkanTesting" EXPLICIT_BUILD_TARGET_NAME="all">
       <envs>
         <env name="VK_ICD_FILENAMES" value="$USER_HOME$/VulkanSDK/macOS/share/vulkan/icd.d/MoltenVK_icd.json" />
         <env name="VK_LAYER_PATH" value="$USER_HOME$/VulkanSDK/macOS/share/vulkan/explicit_layer.d" />
@@ -96,9 +121,14 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" WORKING_DIR="file://$ContentRoot$" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Debug" RUN_PATH="VulkanTesting" EXPLICIT_BUILD_TARGET_NAME="all">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="compile.sh" type="ShConfigurationType">
@@ -122,117 +152,18 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="0337ae03-f340-42ef-b2a4-3a3e95540f00" name="Default Changelist" comment="" />
-      <created>1614442906359</created>
+      <changelist id="bb4ec630-8892-4a4e-b112-4b1e5a758c19" name="Default Changelist" comment="removal of unused files" />
+      <created>1615577244329</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1614442906359</updated>
-      <workItem from="1614442908641" duration="1282000" />
-      <workItem from="1614449190721" duration="12000" />
-      <workItem from="1614449445832" duration="10000" />
-      <workItem from="1614450423750" duration="45000" />
-      <workItem from="1614469934413" duration="87000" />
-      <workItem from="1614470298050" duration="357000" />
-      <workItem from="1614470919028" duration="25000" />
-      <workItem from="1614471590558" duration="352000" />
-      <workItem from="1614472887763" duration="353000" />
-      <workItem from="1614474501412" duration="69000" />
-      <workItem from="1614575015038" duration="185000" />
-      <workItem from="1614638773324" duration="13461000" />
-      <workItem from="1614707629818" duration="494000" />
-      <workItem from="1614711606918" duration="2784000" />
-      <workItem from="1614714899089" duration="2226000" />
-      <workItem from="1614742457339" duration="7757000" />
-      <workItem from="1614821599470" duration="13053000" />
-      <workItem from="1614980480453" duration="213000" />
-      <workItem from="1614985885994" duration="22000" />
-      <workItem from="1615006796664" duration="6379000" />
-      <workItem from="1615075902296" duration="2999000" />
-      <workItem from="1615144791951" duration="32072000" />
-      <workItem from="1615268235573" duration="16909000" />
-      <workItem from="1615345274314" duration="2450000" />
-      <workItem from="1615394329331" duration="7407000" />
-      <workItem from="1615439861861" duration="11910000" />
-      <workItem from="1615520503725" duration="14278000" />
+      <updated>1615577244329</updated>
+      <workItem from="1615577246395" duration="32134000" />
+      <workItem from="1615739178339" duration="13960000" />
+      <workItem from="1615764967228" duration="788000" />
+      <workItem from="1615839522729" duration="2433000" />
+      <workItem from="1616019282858" duration="28584000" />
+      <workItem from="1616426796023" duration="28724000" />
     </task>
-    <task id="LOCAL-00001" summary="Small changes">
-      <created>1614639190252</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1614639190252</updated>
-    </task>
-    <task id="LOCAL-00002" summary="Mandelbrot Vulkan Implementation.">
-      <created>1614664449266</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1614664449266</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Mandelbrot Vulkan Implementation.">
-      <created>1614665074268</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1614665074268</updated>
-    </task>
-    <task id="LOCAL-00004" summary="Mandelbrot Vulkan Implementation.">
-      <created>1614707453825</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1614707453825</updated>
-    </task>
-    <task id="LOCAL-00005" summary="Follow Udemy Vulkan Course">
-      <created>1615075965978</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1615075965978</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Successful render of a red cube.&#10;Indexed vertices not yet implemented&#10;have yet to implement uniform buffers.">
-      <created>1615332351624</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1615332351624</updated>
-    </task>
-    <task id="LOCAL-00007" summary="Successful render of a red cube.&#10;Indexed vertices not yet implemented&#10;have yet to implement uniform buffers.">
-      <created>1615336679964</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1615336679965</updated>
-    </task>
-    <task id="LOCAL-00008" summary="Primitive.h added to the shape directory">
-      <created>1615336779897</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1615336779897</updated>
-    </task>
-    <task id="LOCAL-00009" summary="Node architecture for shapes has been implemented.">
-      <created>1615433766769</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1615433766769</updated>
-    </task>
-    <task id="LOCAL-00010" summary="Indexed node has been implemented as well as staging buffer for vertices/indices to allow for GPU local memory optimization.">
-      <created>1615573873925</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1615573873925</updated>
-    </task>
-    <task id="LOCAL-00011" summary="removal of unused files">
-      <created>1615574153895</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1615574153895</updated>
-    </task>
-    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -243,39 +174,12 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="VulkanTesting/Cube" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <ignored-roots>
-      <path value="$PROJECT_DIR$/../.." />
-      <path value="$PROJECT_DIR$/.." />
-    </ignored-roots>
-    <MESSAGE value="Small changes" />
-    <MESSAGE value="Mandelbrot Vulkan Implementation." />
-    <MESSAGE value="Follow Udemy Vulkan Course" />
-    <MESSAGE value="Successful render of a red cube.&#10;Indexed vertices not yet implemented&#10;have yet to implement uniform buffers." />
-    <MESSAGE value="Primitive.h added to the shape directory" />
-    <MESSAGE value="Node architecture for shapes has been implemented." />
-    <MESSAGE value="Indexed node has been implemented as well as staging buffer for vertices/indices to allow for GPU local memory optimization." />
-    <MESSAGE value="removal of unused files" />
-    <option name="LAST_COMMIT_MESSAGE" value="removal of unused files" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="../../../../Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/cmake-build-debug-coverage" NAME="VulkanTesting Coverage Results" MODIFIED="1615077661067" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="gcov/llvm" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

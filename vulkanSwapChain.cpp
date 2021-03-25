@@ -7,10 +7,8 @@
 // std
 #include <array>
 #include <cstdlib>
-#include <cstring>
 #include <iostream>
 #include <limits>
-#include <set>
 #include <stdexcept>
 
 namespace hva {
@@ -59,7 +57,7 @@ namespace hva {
     VkResult VulkanSwapChain::acquireNextImage(uint32_t *imageIndex) {
 
         vkWaitForFences(device.device(),1,&inFlightFences[currentFrame], VK_TRUE, std::numeric_limits<uint64_t>::max());
-
+        
         VkResult result = vkAcquireNextImageKHR(device.device(), swapChain, std::numeric_limits<uint64_t>::max(),imageAvailableSemaphores[currentFrame],VK_NULL_HANDLE, imageIndex);
 
         return result;
@@ -197,15 +195,6 @@ namespace hva {
     }
 
     void VulkanSwapChain::createRenderPass() {
-        VkAttachmentDescription depthAttachment{};
-        depthAttachment.format = findDepthFormat();
-        depthAttachment.samples = VK_SAMPLE_COUNT_1_BIT;
-        depthAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
-        depthAttachment.storeOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-        depthAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-        depthAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-        depthAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-        depthAttachment.finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
 
         VkAttachmentDescription colorAttachment = {};
         colorAttachment.format = getSwapChainImageFormat();     // format to use for attachment. obtained from swapchain
@@ -225,9 +214,19 @@ namespace hva {
         colorAttachmentRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL; // This layout will be optimal for colour output. We are expecting it to be converted from
         // UNDEFINED when we defined the renderPass to the optimal color attachment for the first subpass.
 
+        VkAttachmentDescription depthAttachment{};
+        depthAttachment.format = findDepthFormat();
+        depthAttachment.samples = VK_SAMPLE_COUNT_1_BIT;
+        depthAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR; //when we load the attachment, we first clear the depth buffer.
+        depthAttachment.storeOp = VK_ATTACHMENT_STORE_OP_DONT_CARE; //we don't want to store the value. so we don't care what the pipeline does with it afterwards
+        depthAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE; //stencil is present but we are not using it.
+        depthAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE; //same things here.
+        depthAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED; //we don't care how its state is when it starts.
+        depthAttachment.finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL; //this is the layout we want it to be before we use it.
+
         VkAttachmentReference depthAttachmentRef{}; //gives an indirect attachment to the depth stencil attachment passed from the subpass.
-        depthAttachmentRef.attachment = 1;
-        depthAttachmentRef.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+        depthAttachmentRef.attachment = 1; //this is an index in the array of attachment. 0 refers to the colour attachment,
+        depthAttachmentRef.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL; //the layout of the depth buffer in the subpass. we don't want it to change so we keep it the same as finallayout.
 
         VkSubpassDescription subpass = {};
         subpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS; // the point in the pipeline where it will bind. we want it to bind in the graphics pipeline.
@@ -418,7 +417,7 @@ namespace hva {
 
     VkFormat VulkanSwapChain::findDepthFormat() {
         return device.findSupportedFormat(
-                {VK_FORMAT_D32_SFLOAT, VK_FORMAT_D32_SFLOAT_S8_UINT, VK_FORMAT_D24_UNORM_S8_UINT},
+                {VK_FORMAT_D32_SFLOAT_S8_UINT, VK_FORMAT_D32_SFLOAT, VK_FORMAT_D24_UNORM_S8_UINT},
                 VK_IMAGE_TILING_OPTIMAL,
                 VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT);
     }

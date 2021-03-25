@@ -11,7 +11,7 @@
 
 namespace hva {
 
-    VulkanModel::VulkanModel(VulkanDevice &device, const std::vector<Vertex> &vertices, const std::vector<uint16_t>& indices, VkQueue transferQueue, VkCommandPool transferCommandPool) : device{device}{
+    VulkanModel::VulkanModel(VulkanDevice &device, const std::vector<Vertex> &vertices, const std::vector<uint32_t>& indices, VkQueue transferQueue, VkCommandPool transferCommandPool) : device{device}{
         createVertexBuffers(vertices, transferQueue, transferCommandPool);
         createindexBuffers(indices, transferQueue, transferCommandPool);
     }
@@ -58,12 +58,12 @@ namespace hva {
 
     }
 
-    void VulkanModel::createindexBuffers(const std::vector<uint16_t> &indices, VkQueue transferQueue,
+    void VulkanModel::createindexBuffers(const std::vector<uint32_t> &indices, VkQueue transferQueue,
                                          VkCommandPool transferCommandPool) {
         //get size of buffer for indices
         indexCount = static_cast<uint32_t>(indices.size());
         assert(indexCount >= 3 && "indexCount count must be at least 3");
-        VkDeviceSize bufferSize = sizeof(uint16_t) * indices.size();
+        VkDeviceSize bufferSize = sizeof(uint32_t) * indices.size();
         VkBuffer stagingBuffer;
         VkDeviceMemory stagingBufferMemory;
 
@@ -106,6 +106,6 @@ namespace hva {
     }
 
     void VulkanModel::bindIndexed(VkCommandBuffer commandBuffer) { //bind model index buffer
-        vkCmdBindIndexBuffer(commandBuffer, indexBuffer, 0, VK_INDEX_TYPE_UINT16);
+        vkCmdBindIndexBuffer(commandBuffer, indexBuffer, 0, VK_INDEX_TYPE_UINT32);
     }
 }

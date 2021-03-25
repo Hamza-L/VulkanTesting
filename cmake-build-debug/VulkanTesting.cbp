@@ -94,6 +94,9 @@
 		<Unit filename="/Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/shapes/Cube.h">
 			<Option target="VulkanTesting"/>
 		</Unit>
+		<Unit filename="/Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/shapes/Icosahedron.h">
+			<Option target="VulkanTesting"/>
+		</Unit>
 		<Unit filename="/Users/hamzalah/Documents/gitProjects/VulkanTest/VulkanTesting/VulkanTesting/shapes/Node.h">
 			<Option target="VulkanTesting"/>
 		</Unit>

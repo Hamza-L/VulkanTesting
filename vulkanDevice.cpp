@@ -156,6 +156,7 @@ namespace hva {
 
         VkPhysicalDeviceFeatures deviceFeatures = {};
         deviceFeatures.samplerAnisotropy = VK_TRUE;
+        //deviceFeatures.wideLines = VK_TRUE; //not available on this device
 
         VkDeviceCreateInfo createInfo = {};
         createInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
@@ -422,7 +423,7 @@ namespace hva {
         bufferInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE; //similar to swap chain images. only one thing using it at a time.
 
         if (vkCreateBuffer(device_, &bufferInfo, nullptr, &buffer) != VK_SUCCESS) {
-            throw std::runtime_error("failed to create vertex buffer!");
+            throw std::runtime_error("failed to create buffer!");
         }
 
         VkMemoryRequirements memRequirements;
@@ -434,7 +435,7 @@ namespace hva {
         allocInfo.memoryTypeIndex = findMemoryType(memRequirements.memoryTypeBits, inProperties);
 
         if (vkAllocateMemory(device_, &allocInfo, nullptr, &bufferMemory) != VK_SUCCESS) {
-            throw std::runtime_error("failed to allocate vertex buffer memory!");
+            throw std::runtime_error("failed to allocate buffer memory!");
         }
 
         vkBindBufferMemory(device_, buffer, bufferMemory, 0);

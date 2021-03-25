@@ -13,7 +13,7 @@ class Node {
 protected:
     std::vector<Node> children{};
     std::vector<Vertex> vertices;
-    std::vector<uint16_t> indices;
+    std::vector<uint32_t> indices;
     glm::mat4 Model = glm::mat4(1.0f);
     glm::mat4 MinvT = glm::mat4(1.0f);
 public:
@@ -33,28 +33,31 @@ public:
         std::vector<Vertex> outVert;
         glm::vec4 tempPos;
         glm::vec4 tempNorm;
-        for (auto & v : vertices){
+        for (auto & currV : vertices){
+            Vertex v = currV;
             tempPos = Model * glm::vec4(v.position,1.0f);
-            tempNorm = MinvT * glm::vec4(v.norm,0.0f);
+            tempNorm = glm::normalize(MinvT * glm::vec4(v.norm,0.0f));
             v.position = glm::vec3(tempPos.x, tempPos.y, tempPos.z);
             v.norm = glm::vec3(tempNorm.x, tempNorm.y, tempNorm.z);
+            v.colour = v.colour;
             outVert.push_back(v);
         }
-
         for (Node child : children){
-            for(Vertex v : child.getVert()){
+            for(Vertex currV : child.getVert()){
+                Vertex v = currV;
                 tempPos = Model * glm::vec4(v.position,1.0f);
-                tempNorm = MinvT * glm::vec4(v.norm,0.0f);
+                tempNorm = glm::normalize(MinvT * glm::vec4(v.norm,0.0f));
                 v.position = glm::vec3(tempPos.x, tempPos.y, tempPos.z);
                 v.norm = glm::vec3(tempNorm.x, tempNorm.y, tempNorm.z);
+                v.colour = v.colour;
                 outVert.push_back(v);
             }
         }
         return outVert;
     }
 
-    virtual std::vector<uint16_t> getInd() {
-        std::vector<uint16_t> outInd;
+    virtual std::vector<uint32_t> getInd() {
+        std::vector<uint32_t> outInd;
         int offset = 0;
         for (auto & ind : indices){
             outInd.push_back(ind);

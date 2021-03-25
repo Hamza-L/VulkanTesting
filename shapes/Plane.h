@@ -35,7 +35,6 @@ public:
         indices.push_back(2);
         indices.push_back(3);
 
-
         vertices.push_back(v0);
         vertices.push_back(v1);
         vertices.push_back(v2);
@@ -68,10 +67,10 @@ public:
         t2 = MinvT * glm::vec4(0.0f, 0.0f, 1.0f,0.0f);
         t3 = MinvT * glm::vec4(0.0f, 0.0f, 1.0f,0.0f);
 
-        v0.norm = glm::vec3(t0.x,t0.y,t0.z);
-        v1.norm = glm::vec3(t1.x,t1.y,t1.z);
-        v2.norm = glm::vec3(t2.x,t2.y,t2.z);
-        v3.norm = glm::vec3(t3.x,t3.y,t3.z);
+        v0.norm = glm::normalize(glm::vec3(t0.x,t0.y,t0.z));
+        v1.norm = glm::normalize(glm::vec3(t1.x,t1.y,t1.z));
+        v2.norm = glm::normalize(glm::vec3(t2.x,t2.y,t2.z));
+        v3.norm = glm::normalize(glm::vec3(t3.x,t3.y,t3.z));
 
         //indices = {0, 1, 2, 0, 2, 3};
         indices.push_back(0);
@@ -113,10 +112,10 @@ public:
         t2 = MinvT * glm::vec4(0.0f, 0.0f, 1.0f,0.0f);
         t3 = MinvT * glm::vec4(0.0f, 0.0f, 1.0f,0.0f);
 
-        v0.norm = glm::vec3(t0.x,t0.y,t0.z);
-        v1.norm = glm::vec3(t1.x,t1.y,t1.z);
-        v2.norm = glm::vec3(t2.x,t2.y,t2.z);
-        v3.norm = glm::vec3(t3.x,t3.y,t3.z);
+        v0.norm = glm::normalize(glm::vec3(t0.x,t0.y,t0.z));
+        v1.norm = glm::normalize(glm::vec3(t1.x,t1.y,t1.z));
+        v2.norm = glm::normalize(glm::vec3(t2.x,t2.y,t2.z));
+        v3.norm = glm::normalize(glm::vec3(t3.x,t3.y,t3.z));
 
         //indices = {0, 1, 2, 0, 2, 3};
         indices.push_back(0);

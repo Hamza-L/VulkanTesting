@@ -9,7 +9,7 @@ class Triangle {
 private:
     int size;
     std::vector<Vertex> vertices;
-    std::vector<uint16_t> indices;
+    std::vector<uint32_t> indices;
 public:
     Triangle(){
         Vertex v0,v1,v2;

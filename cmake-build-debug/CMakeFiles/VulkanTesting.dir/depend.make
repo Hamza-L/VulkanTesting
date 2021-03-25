@@ -4,6 +4,7 @@
 CMakeFiles/VulkanTesting.dir/main.cpp.o: ../main.cpp
 CMakeFiles/VulkanTesting.dir/main.cpp.o: ../newVulkanApp.h
 CMakeFiles/VulkanTesting.dir/main.cpp.o: ../shapes/Cube.h
+CMakeFiles/VulkanTesting.dir/main.cpp.o: ../shapes/Icosahedron.h
 CMakeFiles/VulkanTesting.dir/main.cpp.o: ../shapes/Node.h
 CMakeFiles/VulkanTesting.dir/main.cpp.o: ../shapes/Plane.h
 CMakeFiles/VulkanTesting.dir/main.cpp.o: ../shapes/vert.h
@@ -196,6 +197,7 @@ CMakeFiles/VulkanTesting.dir/main.cpp.o: /usr/local/include/vulkan/vulkan_xlib_x
 CMakeFiles/VulkanTesting.dir/newVulkanApp.cpp.o: ../newVulkanApp.cpp
 CMakeFiles/VulkanTesting.dir/newVulkanApp.cpp.o: ../newVulkanApp.h
 CMakeFiles/VulkanTesting.dir/newVulkanApp.cpp.o: ../shapes/Cube.h
+CMakeFiles/VulkanTesting.dir/newVulkanApp.cpp.o: ../shapes/Icosahedron.h
 CMakeFiles/VulkanTesting.dir/newVulkanApp.cpp.o: ../shapes/Node.h
 CMakeFiles/VulkanTesting.dir/newVulkanApp.cpp.o: ../shapes/Plane.h
 CMakeFiles/VulkanTesting.dir/newVulkanApp.cpp.o: ../shapes/vert.h
