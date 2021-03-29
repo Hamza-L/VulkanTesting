@@ -86,7 +86,7 @@ namespace hva{
     void NewVulkanApp::loadModels() {
 
         //setting up the UboVP matrices
-        uboVP.P = glm::perspective(glm::radians(25.0f), (float) vulkanSwapChain->width()/(float)vulkanSwapChain->height(),
+        uboVP.P = glm::perspective(glm::radians(45.0f), (float) vulkanSwapChain->width()/(float)vulkanSwapChain->height(),
                                  0.1f, 100.0f);
         uboVP.V = glm::lookAt(glm::vec3(0.0f,0.0f,4.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(0.0f,1.0f,0.0f));
         uboVP.lightPos = glm::vec4(-2.0f, 3.0f, 4.0f, 1.0f);

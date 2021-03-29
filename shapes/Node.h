@@ -33,12 +33,15 @@ public:
         std::vector<Vertex> outVert;
         glm::vec4 tempPos;
         glm::vec4 tempNorm;
+        glm::vec4 tempUp;
         for (auto & currV : vertices){
             Vertex v = currV;
             tempPos = Model * glm::vec4(v.position,1.0f);
             tempNorm = glm::normalize(MinvT * glm::vec4(v.norm,0.0f));
+            tempUp = glm::normalize(MinvT * glm::vec4(v.up,0.0f));
             v.position = glm::vec3(tempPos.x, tempPos.y, tempPos.z);
             v.norm = glm::vec3(tempNorm.x, tempNorm.y, tempNorm.z);
+            v.up = glm::vec3(tempUp.x, tempUp.y, tempUp.z);
             v.colour = v.colour;
             v.texCoord = v.texCoord;
             outVert.push_back(v);
@@ -48,8 +51,10 @@ public:
                 Vertex v = currV;
                 tempPos = Model * glm::vec4(v.position,1.0f);
                 tempNorm = glm::normalize(MinvT * glm::vec4(v.norm,0.0f));
+                tempUp = glm::normalize(MinvT * glm::vec4(v.up,0.0f));
                 v.position = glm::vec3(tempPos.x, tempPos.y, tempPos.z);
                 v.norm = glm::vec3(tempNorm.x, tempNorm.y, tempNorm.z);
+                v.up = glm::vec3(tempUp.x, tempUp.y, tempUp.z);
                 v.colour = v.colour;
                 v.texCoord = v.texCoord;
                 outVert.push_back(v);
