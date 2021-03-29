@@ -40,6 +40,7 @@ public:
             v.position = glm::vec3(tempPos.x, tempPos.y, tempPos.z);
             v.norm = glm::vec3(tempNorm.x, tempNorm.y, tempNorm.z);
             v.colour = v.colour;
+            v.texCoord = v.texCoord;
             outVert.push_back(v);
         }
         for (Node child : children){
@@ -50,6 +51,7 @@ public:
                 v.position = glm::vec3(tempPos.x, tempPos.y, tempPos.z);
                 v.norm = glm::vec3(tempNorm.x, tempNorm.y, tempNorm.z);
                 v.colour = v.colour;
+                v.texCoord = v.texCoord;
                 outVert.push_back(v);
             }
         }

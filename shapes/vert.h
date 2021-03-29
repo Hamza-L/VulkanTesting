@@ -21,6 +21,7 @@ struct Vertex{
     glm::vec3 position{};
     glm::vec3 colour{};
     glm::vec3 norm{};
+    glm::vec2 texCoord{}; //UV coord for textures.
 
     static std::vector<VkVertexInputBindingDescription> getBindingDescriptions() {
         std::vector<VkVertexInputBindingDescription> bindingDescriptions(1);
@@ -31,7 +32,7 @@ struct Vertex{
     }
 
     static std::vector<VkVertexInputAttributeDescription> getAttributeDescriptions() {
-        std::vector<VkVertexInputAttributeDescription> attributeDescriptions(3);
+        std::vector<VkVertexInputAttributeDescription> attributeDescriptions(4);
         attributeDescriptions[0].binding = 0; //which binding is the attribute at
         attributeDescriptions[0].location = 0; //location where the attribute is bound (seen in the vertex shader)
         attributeDescriptions[0].format = VK_FORMAT_R32G32B32_SFLOAT; //format of the attribute
@@ -46,6 +47,11 @@ struct Vertex{
         attributeDescriptions[2].location = 2;
         attributeDescriptions[2].format = VK_FORMAT_R32G32B32_SFLOAT;
         attributeDescriptions[2].offset = offsetof(Vertex, norm);
+
+        attributeDescriptions[3].binding = 0;
+        attributeDescriptions[3].location = 3;
+        attributeDescriptions[3].format = VK_FORMAT_R32G32_SFLOAT;
+        attributeDescriptions[3].offset = offsetof(Vertex, texCoord);
 
         return attributeDescriptions;
     }

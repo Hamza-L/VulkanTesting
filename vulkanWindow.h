@@ -22,6 +22,8 @@ namespace hva {
         VulkanWindow &operator=(const VulkanWindow&) = delete;
 
         bool shouldClose(){ return glfwWindowShouldClose(window);};
+        bool wasWindowResized(){return frameBufferResized;};
+        void resetWindowResizedFlag(){frameBufferResized = false;};
         GLFWwindow* getWindow(){return window;}
         void rename(std::string name){
             windowName = name;
@@ -36,10 +38,12 @@ namespace hva {
         };
 
     private:
+        static void frameBufferResizeCallback(GLFWwindow* window, int width, int height);
         void initWindow();
 
-        const int width;
-        const int height;
+        int width;
+        int height;
+        bool frameBufferResized;
 
         std::string windowName;
         GLFWwindow *window;

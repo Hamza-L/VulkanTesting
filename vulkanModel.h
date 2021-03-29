@@ -29,7 +29,7 @@ namespace hva {
 
     class VulkanModel{
     public:
-        VulkanModel(VulkanDevice &device, const std::vector<Vertex> &vertices, const std::vector<uint32_t>& indices, VkQueue transferQueue, VkCommandPool transferCommandPool);
+        VulkanModel(VulkanDevice &device, const std::vector<Vertex> &vertices, const std::vector<uint32_t>& indices, VkQueue transferQueue, VkCommandPool transferCommandPool, int newTexID);
         ~VulkanModel();
 
         VulkanModel(const VulkanModel&) = delete;
@@ -47,9 +47,14 @@ namespace hva {
             pobj.MinvT = glm::transpose(glm::inverse(M));
         };
 
+        int getTexID(){return texID;};
+        void setTexID(int newTexID){texID = newTexID;};
+
     private:
         void createVertexBuffers(const std::vector<Vertex> &vertices, VkQueue transferQueue, VkCommandPool transferCommandPool);
         void createindexBuffers(const std::vector<uint32_t> &indices, VkQueue transferQueue, VkCommandPool transferCommandPool);
+
+        int texID;
 
 
         VulkanDevice &device;

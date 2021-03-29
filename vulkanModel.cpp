@@ -11,9 +11,10 @@
 
 namespace hva {
 
-    VulkanModel::VulkanModel(VulkanDevice &device, const std::vector<Vertex> &vertices, const std::vector<uint32_t>& indices, VkQueue transferQueue, VkCommandPool transferCommandPool) : device{device}{
+    VulkanModel::VulkanModel(VulkanDevice &device, const std::vector<Vertex> &vertices, const std::vector<uint32_t>& indices, VkQueue transferQueue, VkCommandPool transferCommandPool, int newTexID) : device{device}{
         createVertexBuffers(vertices, transferQueue, transferCommandPool);
         createindexBuffers(indices, transferQueue, transferCommandPool);
+        texID = newTexID;
     }
 
     VulkanModel::~VulkanModel() {

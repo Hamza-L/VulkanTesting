@@ -23,8 +23,8 @@ namespace hva {
         VulkanSwapChain(VulkanDevice &deviceRef, VkExtent2D windowExtent);
         ~VulkanSwapChain();
 
-        //VulkanSwapChain(const VulkanSwapChain &) = delete;
-        //void operator=(const VulkanSwapChain &) = delete;
+        VulkanSwapChain(const VulkanSwapChain &) = delete;
+        VulkanSwapChain& operator=(const VulkanSwapChain &) = delete;
 
         VkFramebuffer getFrameBuffer(int index) { return swapChainFramebuffers[index]; }
         VkRenderPass getRenderPass() { return renderPass; }
@@ -42,6 +42,8 @@ namespace hva {
 
         VkResult acquireNextImage(uint32_t *imageIndex);
         VkResult submitCommandBuffers(const VkCommandBuffer *buffers, uint32_t *imageIndex);
+
+        static VkImageView createImageView(VkDevice device, VkImage image, VkFormat format, VkImageAspectFlags aspectFlags);
 
     private:
         struct imageconfig{

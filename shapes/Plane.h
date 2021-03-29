@@ -16,6 +16,11 @@ public:
         v2.position = {-0.5f, 0.5f, 0.0f};
         v3.position = {0.5f, 0.5f, 0.0f};
 
+        v0.texCoord = {0,1};
+        v1.texCoord = {0,0};
+        v2.texCoord = {1,0};
+        v3.texCoord = {1,1};
+
         v0.colour = {0.1f, 0.1f, 0.1f};
         v1.colour = {0.1f, 0.1f, 0.1f};
         v2.colour = {0.1f, 0.1f, 0.1f};
@@ -56,6 +61,11 @@ public:
         v1.position = glm::vec3(t1.x,t1.y,t1.z);
         v2.position = glm::vec3(t2.x,t2.y,t2.z);
         v3.position = glm::vec3(t3.x,t3.y,t3.z);
+
+        v0.texCoord = {0,1};
+        v1.texCoord = {0,0};
+        v2.texCoord = {1,0};
+        v3.texCoord = {1,1};
 
         v0.colour = {0.1f, 0.1f, 0.1f};
         v1.colour = {0.1f, 0.1f, 0.1f};
@@ -101,6 +111,11 @@ public:
         v1.position = glm::vec3(t1.x,t1.y,t1.z);
         v2.position = glm::vec3(t2.x,t2.y,t2.z);
         v3.position = glm::vec3(t3.x,t3.y,t3.z);
+
+        v0.texCoord = {1,1};
+        v1.texCoord = {0,1};
+        v2.texCoord = {0,0};
+        v3.texCoord = {1,0};
 
         v0.colour = colour;
         v1.colour = colour;

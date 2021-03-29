@@ -156,6 +156,7 @@ namespace hva {
 
         VkPhysicalDeviceFeatures deviceFeatures = {};
         deviceFeatures.samplerAnisotropy = VK_TRUE;
+        deviceFeatures.fillModeNonSolid = VK_TRUE;
         //deviceFeatures.wideLines = VK_TRUE; //not available on this device
 
         VkDeviceCreateInfo createInfo = {};
@@ -536,6 +537,55 @@ namespace hva {
         if (vkBindImageMemory(device_, image, imageMemory, 0) != VK_SUCCESS) {
             throw std::runtime_error("failed to bind image memory!");
         }
+    }
+
+    void VulkanDevice::transitionImageLayout(VkQueue queue, VkCommandPool commandPool, VkImage image,
+                                             VkImageLayout oldLayout, VkImageLayout newLayout) {
+        VkCommandBuffer commandBuffer = beginSingleTimeCommands(commandPool);
+
+        VkImageMemoryBarrier imageMemoryBarrier = {};
+        imageMemoryBarrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
+        imageMemoryBarrier.oldLayout = oldLayout; //old layout to transition from
+        imageMemoryBarrier.newLayout = newLayout; //new layout to transition to
+        imageMemoryBarrier.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED; //queuefamily to transition from
+        imageMemoryBarrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED; //queueFamily to transition to
+        imageMemoryBarrier.image = image;    //image being accessed and modified as part of the barrier.
+
+        imageMemoryBarrier.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT; //the aspect of the image being altered.
+        imageMemoryBarrier.subresourceRange.baseMipLevel = 0; //first mipmap level to start alteration from
+        imageMemoryBarrier.subresourceRange.levelCount = 1; //number of mipmap levels
+        imageMemoryBarrier.subresourceRange.baseArrayLayer = 0; //first layer to start operations on
+        imageMemoryBarrier.subresourceRange.layerCount = 1; //number of layers being altered starting from base layer.
+
+        VkPipelineStageFlags srcStage;
+        VkPipelineStageFlags dstStage;
+
+        //if transitioning from new Image to image ready to receive data
+        if (oldLayout == VK_IMAGE_LAYOUT_UNDEFINED && newLayout == VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL) {
+            imageMemoryBarrier.srcAccessMask = 0;                            //memory access stage must happen AFTER this stage
+            imageMemoryBarrier.dstAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT; //memory access stage must happen BEFORE this stage
+
+            srcStage = VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT; //memory access stage must happen AFTER this stage
+            dstStage = VK_PIPELINE_STAGE_TRANSFER_BIT; //memory access stage must happen BEFORE this stage
+        } else if (oldLayout == VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL && newLayout == VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL) {
+            imageMemoryBarrier.srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;                            //memory access stage must happen AFTER this stage
+            imageMemoryBarrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT; //memory access stage must happen BEFORE this stage
+
+            srcStage = VK_PIPELINE_STAGE_TRANSFER_BIT; //memory access stage must happen AFTER this stage
+            dstStage = VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT; //memory access stage must happen BEFORE this stage
+        }
+
+        vkCmdPipelineBarrier(
+                commandBuffer,
+                srcStage,dstStage, //pipeline stages (matches to src and dst masks)
+                0,      //dependency flags
+                0, nullptr, //has to do with memorybarriers (count, data)
+                0, nullptr, //has to do with bufferbarriers (count, data)
+                1, &imageMemoryBarrier);
+
+
+        endSingleTimeCommands(commandBuffer, queue, commandPool);
+
     }
 
 }  // namespace lve

@@ -1,6 +1,8 @@
 //
 // Created by Hamza Lahmimsi on 2021-02-19.
 //
+#define STB_IMAGE_IMPLEMENTATION
+
 #include "newVulkanApp.h"
 
 //std lib
@@ -13,7 +15,7 @@ int main(){
     hva::NewVulkanApp app{};
 
     try{
-        app.run();
+        app.run("");
     } catch (const std::exception &e){
         std::cerr << e.what() <<std::endl;
         return EXIT_FAILURE;

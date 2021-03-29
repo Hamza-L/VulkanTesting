@@ -4,8 +4,9 @@
 layout(location = 0) in vec3 position; //signals that the data comes from a vertex buffer
 layout(location = 1) in vec3 inColour;
 layout(location = 2) in vec3 norm;
+layout(location = 3) in vec2 tex;
 
-layout(binding = 0) uniform UboVP { //fixed ubo
+layout(set = 0, binding = 0) uniform UboVP { //fixed ubo
     mat4 V;
     mat4 P;
     vec4 lightPos;
@@ -27,11 +28,13 @@ layout(location = 0) out vec3 fragColour;
 layout(location = 1) out vec3 normalForFP;
 layout(location = 2) out vec3 positionForFP;
 layout(location = 3) out vec3 lightPos;
+layout(location = 4) out vec2 fragtex;
+layout(location = 5) out mat4 V;
 
 void main() {
-
     gl_Position = uboVP.P * uboVP.V * pObj.M * vec4(position, 1.0);
     fragColour = inColour;
+    fragtex = tex;
     //fragColour = vec3(uboVP.M[0][0],uboVP.M[1][1],uboVP.M[2][2]);
     //fragColour = vec3(1.0f,1.0f,1.0f);
 
@@ -41,4 +44,5 @@ void main() {
     positionForFP = tempPos.xyz;
     vec4 tempNorm = uboVP.V * pObj.MinvT * vec4(norm, 0.0f);
     normalForFP = normalize(tempNorm.xyz);
+    V = uboVP.V * pObj.MinvT;
 }

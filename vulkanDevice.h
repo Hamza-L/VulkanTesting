@@ -29,10 +29,10 @@ namespace hva {
 
     class VulkanDevice {
     public:
-#ifdef DEBUG
-        const bool enableValidationLayers = true;
-#else
+#ifdef NDEBUG
         const bool enableValidationLayers = false;
+#else
+        const bool enableValidationLayers = true;
 #endif
 
         VulkanDevice(hva::VulkanWindow &window);
@@ -40,7 +40,7 @@ namespace hva {
 
         // Not copyable or movable
         VulkanDevice(const VulkanDevice &) = delete;
-        void operator=(const VulkanDevice &) = delete;
+        VulkanDevice& operator=(const VulkanDevice &) = delete;
         VulkanDevice(VulkanDevice &&) = delete;
         VulkanDevice &operator=(VulkanDevice &&) = delete;
 
@@ -74,6 +74,7 @@ namespace hva {
                 VkMemoryPropertyFlags properties,
                 VkImage &image,
                 VkDeviceMemory &imageMemory);
+        void transitionImageLayout(VkQueue queue, VkCommandPool commandPool, VkImage image, VkImageLayout oldLayout, VkImageLayout newLayout);
 
         VkPhysicalDeviceProperties properties;
 

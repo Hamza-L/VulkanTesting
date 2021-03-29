@@ -57,7 +57,7 @@ namespace hva {
     VkResult VulkanSwapChain::acquireNextImage(uint32_t *imageIndex) {
 
         vkWaitForFences(device.device(),1,&inFlightFences[currentFrame], VK_TRUE, std::numeric_limits<uint64_t>::max());
-        
+
         VkResult result = vkAcquireNextImageKHR(device.device(), swapChain, std::numeric_limits<uint64_t>::max(),imageAvailableSemaphores[currentFrame],VK_NULL_HANDLE, imageIndex);
 
         return result;
@@ -104,7 +104,7 @@ namespace hva {
         presentInfo.pSwapchains = swapChains;
 
         presentInfo.pImageIndices = imageIndex; //index of image in swapchain to present
-
+        vkWaitForFences(device.device(),1,&inFlightFences[currentFrame], VK_TRUE, std::numeric_limits<uint64_t>::max());
         auto result = vkQueuePresentKHR(device.presentQueue(), &presentInfo);
 
         currentFrame = (currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
@@ -176,21 +176,7 @@ namespace hva {
     void VulkanSwapChain::createImageViews() {
         swapChainImageViews.resize(swapChainImages.size());
         for (size_t i = 0; i < swapChainImages.size(); i++) {
-            VkImageViewCreateInfo viewInfo{};
-            viewInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
-            viewInfo.image = swapChainImages[i];
-            viewInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
-            viewInfo.format = swapChainImageFormat;
-            viewInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-            viewInfo.subresourceRange.baseMipLevel = 0;
-            viewInfo.subresourceRange.levelCount = 1;
-            viewInfo.subresourceRange.baseArrayLayer = 0;
-            viewInfo.subresourceRange.layerCount = 1;
-
-            if (vkCreateImageView(device.device(), &viewInfo, nullptr, &swapChainImageViews[i]) !=
-                VK_SUCCESS) {
-                throw std::runtime_error("failed to create texture image view!");
-            }
+            swapChainImageViews[i] = createImageView(device.device(),swapChainImages[i],swapChainImageFormat,VK_IMAGE_ASPECT_COLOR_BIT);
         }
     }
 
@@ -254,7 +240,7 @@ namespace hva {
         //the transition from UNDEFINED to OPTIMAL COLOUR after this^ and before thisv
         dependencies[1].dstSubpass = VK_SUBPASS_EXTERNAL; //go from EXTERNAL to the first subpass. We need to do the conversion before we get to subpass[0]
         dependencies[1].dstStageMask = VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT;
-        dependencies[1].dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT;
+        dependencies[1].dstAccessMask = VK_ACCESS_MEMORY_READ_BIT;
         dependencies[1].dependencyFlags = 0;
         //basically before we read and write we need to convert them. They are like substates of subpass.
 
@@ -395,7 +381,7 @@ namespace hva {
         //   }
         // }
 
-        std::cout << "Present mode: V-Sync" << std::endl;
+        //std::cout << "Present mode: V-Sync" << std::endl;
         return VK_PRESENT_MODE_FIFO_KHR;
     }
 
@@ -420,6 +406,37 @@ namespace hva {
                 {VK_FORMAT_D32_SFLOAT_S8_UINT, VK_FORMAT_D32_SFLOAT, VK_FORMAT_D24_UNORM_S8_UINT},
                 VK_IMAGE_TILING_OPTIMAL,
                 VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT);
+    }
+
+    VkImageView VulkanSwapChain::createImageView(VkDevice device, VkImage image, VkFormat format, VkImageAspectFlags aspectFlags) {
+
+        VkImageViewCreateInfo viewCreateInfo = {};
+        viewCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
+        viewCreateInfo.image = image;											// Image to create view for
+        viewCreateInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;						// Type of image (1D, 2D, 3D, Cube, etc)
+        viewCreateInfo.format = format;											// Format of image data
+
+        viewCreateInfo.components.r = VK_COMPONENT_SWIZZLE_IDENTITY;			// Allows remapping of rgba components to other rgba values
+        viewCreateInfo.components.g = VK_COMPONENT_SWIZZLE_IDENTITY;
+        viewCreateInfo.components.b = VK_COMPONENT_SWIZZLE_IDENTITY;
+        viewCreateInfo.components.a = VK_COMPONENT_SWIZZLE_IDENTITY;
+
+        // Subresources allow the view to view only a part of an image
+        viewCreateInfo.subresourceRange.aspectMask = aspectFlags;				// Which aspect of image to view (e.g. COLOR_BIT for viewing colour)
+        viewCreateInfo.subresourceRange.baseMipLevel = 0;						// Start mipmap level to view from
+        viewCreateInfo.subresourceRange.levelCount = 1;							// Number of mipmap levels to view
+        viewCreateInfo.subresourceRange.baseArrayLayer = 0;						// Start array level to view from
+        viewCreateInfo.subresourceRange.layerCount = 1;							// Number of array levels to view
+
+        // Create image view and return it
+        VkImageView imageView;
+        VkResult result = vkCreateImageView(device, &viewCreateInfo, nullptr, &imageView);
+        if (result != VK_SUCCESS)
+        {
+            throw std::runtime_error("Failed to create an Image View!");
+        }
+
+        return imageView;
     }
 
 }  // namespace lve

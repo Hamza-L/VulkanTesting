@@ -31,7 +31,7 @@ namespace hva{
         VulkanPipeline(VulkanDevice &device, const std::string &vertFilePath, const std::string &fragFilePath, const PipelineConfigInfo &configInfo);
         ~VulkanPipeline();
         VulkanPipeline(const VulkanPipeline&) = delete;
-        void operator=(const VulkanPipeline&) = delete;
+        VulkanPipeline& operator=(const VulkanPipeline&) = delete;
 
         void bind(VkCommandBuffer commandBuffer);
 

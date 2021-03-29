@@ -13,6 +13,7 @@
 #include "shapes/Plane.h"
 #include "shapes/Cube.h"
 #include "shapes/Icosahedron.h"
+#include "stb_image.h"
 
 //std
 #include <memory>
@@ -34,7 +35,7 @@ namespace hva {
         NewVulkanApp(const NewVulkanApp&) = delete;
         NewVulkanApp &operator=(const NewVulkanApp&) = delete;
 
-        void run();
+        void run(std::string object);
         void rename(std::string name){
             vulkanWindow.rename(name);
         };
@@ -61,14 +62,23 @@ namespace hva {
         void createDescriptorSets();
         void updateUniformBuffers(uint32_t imageIndex);
         void allocateDynamicBufferTransferSpace();
+        void recreateSwapchain();
         void drawFrame();
         void updateModels();
+        stbi_uc * loadTextureFile(std::string filename, int* width, int* height, VkDeviceSize* imageSize);
+        int createTextureImage(std::string filename, std::string norm); //return id of the texture array
+        int createTexture(std::string fileName, std::string norm);
+        void createTextureSampler();
+        int createTextureDescriptor(VkImageView texImage);
+        int createTextureAndNormDescriptor(VkImageView texImage, VkImageView normImage);
+
+        int firstTex;
 
         std::vector<Vertex> getNormals(std::vector<Vertex> shape);
 
         VulkanWindow vulkanWindow{WIDTH, HEIGHT, "VulkanApp"};
         VulkanDevice device{vulkanWindow};
-        VulkanSwapChain vulkanSwapChain{device, vulkanWindow.getExtent()};
+        std::unique_ptr<VulkanSwapChain> vulkanSwapChain;
 
         PipelineConfigInfo pipelineConfig;
 
@@ -83,18 +93,29 @@ namespace hva {
         std::vector<VkBuffer> mDynUniformBuffer;
         std::vector<VkDeviceMemory> mDynUniformBufferMemory;
 
-
         VkDescriptorSetLayout descriptorSetLayout;
+        VkDescriptorSetLayout samplerSetLayout;
         VkPushConstantRange pushConstantRange;
 
         VkDescriptorPool descriptorPool;
         std::vector<VkDescriptorSet> descriptorSets;
+        VkDescriptorPool samplerDescriptorPool;
+        std::vector<VkDescriptorSet> samplerDescriptorSets; //these ones are not 1:1 with each image but with each textures.
 
         //size_t modelUniformAlignment;
         //pushObject *modelTransferSpace;
 
         std::unique_ptr<VulkanModel> vulkanModel;
         std::vector<std::unique_ptr<VulkanModel>> modelList;
+
+        //assets
+        std::vector<VkImage> textureImages;
+        std::vector<VkDeviceMemory> textureImageMemory;
+        std::vector<VkImageView> textureImageViews;
+        std::vector<VkImage> textureNormImages;
+        std::vector<VkDeviceMemory> textureNormImageMemory;
+        std::vector<VkImageView> textureNormImageViews;
+        VkSampler texSampler;
     };
 }
 
